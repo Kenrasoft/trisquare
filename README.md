@@ -5,7 +5,7 @@ TriSquare is a finance application designed to provide users with comprehensive 
 ## Installation for Windows:
 
 1. Install git https://git-scm.com/downloads
-2. Install Postgresql set username: Postgres, Password: Kenra123
+2. Install Postgresql set username: Postgres, Password: Kenra123, Hostname:127.0.0.1, Port: 5432
 3. Create Database named pulse.
 4. Clone the repository to your local machine using `git clone https://github.com/kenrasoftorg/trisquare.git'
 5. Open the file trisquare/src/pulse/scripts/pulseschema.sql and run the SQL scripts in PostgreSQL
