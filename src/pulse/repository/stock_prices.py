@@ -117,7 +117,7 @@ class Stock_prices_table(Base, PulseDB_Base):
         return row
 
 
-class Historic_prices_table(Base):
+class Historic_prices_table(Base, PulseDB_Base):
     __tablename__ = 'historic_prices'
     symbol = Column(String, primary_key=True)
     date_time = Column(DateTime, primary_key=True)
@@ -133,55 +133,28 @@ class Historic_prices_table(Base):
     vwap = Column(Float)
     label_name = Column(String)
     change_over_time = Column(Float)
+    market_cap = Column(Float)
 
     def getBase(self):
         return Base
 
     def convert(self, element):
-        # Extract the symbol from the arguments
         row = Historic_prices_table(
-            symbol=None,
-            date_time=element["date"],
-            open_price=element["open"],
-            day_high=element["high"],
-            day_low=element["low"],
-            close_price=element["close"],
-            adj_close=element["adjClose"],
-            volume=element["volume"],
-            unadjusted_volume=element["unadjustedVolume"],
-            day_change=element["change"],
-            change_percent=element["changePercent"],
-            vwap=element["vwap"],
-            label_name=element["label"],
-            change_over_time=element["changeOverTime"]
-        )
+                symbol=element["symbol"],
+                date_time=element["date"],
+                open_price=element["open"],
+                day_high=element["high"],
+                day_low=element["low"],
+                close_price=element["close"],
+                adj_close=element["adjClose"],
+                volume=element["volume"],
+                unadjusted_volume=element["unadjustedVolume"],
+                day_change=element["change"],
+                change_percent=element["changePercent"],
+                vwap=element["vwap"],
+                label_name=element["label"],
+                change_over_time=element["changeOverTime"],
+                market_cap=element["marketCap"]
+            )
         return row
 
-    def convert(self, row, api_data):
-        row.symbol = api_data["symbol"]
-
-    def load_data(self, json_data):
-        db_connector = DatabaseConnect()
-        session = db_connector.connect_db()
-        with session() as session:
-            #symbol = json_data["symbol"]
-            for element in json_data["historical"]:
-                row = Historic_prices_table(
-                    symbol = json_data["symbol"],
-                    date_time = element["date"],
-                    open_price = element["open"],
-                    day_high = element["high"],
-                    day_low = element["low"],
-                    close_price = element["close"],
-                    adj_close = element["adjClose"],
-                    volume = element["volume"],
-                    unadjusted_volume = element["unadjustedVolume"],
-                    day_change = element["change"],
-                    change_percent = element["changePercent"],
-                    vwap = element["vwap"],
-                    label_name = element["label"],
-                    change_over_time = element["changeOverTime"]
-                )
-                session.add(row)
-
-            session.commit()

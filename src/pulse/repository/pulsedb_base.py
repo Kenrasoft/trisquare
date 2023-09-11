@@ -7,8 +7,8 @@ class PulseDB_Base():
     def convert(self, element):
         pass
 
-    def expand_data(row, *extra_data):
-        pass
+    # def expand_data(row, *extra_data):
+    #     pass
 
     def load_data(self, data): 
         db_connector = DatabaseConnect()
@@ -16,7 +16,7 @@ class PulseDB_Base():
         with session() as s:
             for element in data:
                 row = self.convert(element)
-                self.expand_data(row, data)
+                # self.expand_data(row, data)
                 try:
                     s.merge(row)
                     s.commit()

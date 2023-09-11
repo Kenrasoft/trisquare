@@ -59,7 +59,7 @@ class Stockprices(GetApi):
     
 class Historicprices(GetApi):
     def __init__(self)->None :
-        super().__init__("historical-price-full/AAPL?from=2023-03-12&to=2023-09-07&")
+        super().__init__("historical-price-full/AAPL?from=2017-01-01&to=2023-09-07&")
     # def __init__(self, symbol, start_date, end_date) -> None:
     #     query_string = f"historical-price-full/{symbol}?from={start_date}&to={end_date}&"
     #     super().__init__(query_string)
@@ -74,7 +74,7 @@ class Historicprices(GetApi):
 
 class Historic_market_cap(GetApi):
     def __init__(self)->None:
-        super().__init__("historical-market-capitalization/AAPL?limit=1500&")
+        super().__init__("historical-market-capitalization/AAPL?limit=2000&")
 
 
 class Global_stocks(GetApi):

@@ -12,6 +12,7 @@ from pulse.repository.stock_prices import Global_stocks_table
 from pulse.repository.stock_prices import Global_etfs_table
 from pulse.repository.stock_prices import Stock_prices_table
 from pulse.repository.stock_prices import Historic_prices_table
+from pulse.combine.combine import Combine
 
 class Controller():
 # Controller calls the FMPAPI and gets the JSON data. 
@@ -19,77 +20,84 @@ class Controller():
 # Mainly focus on loading all the index companies from SP500, NASDAQ and DOWJONES
 
     def load_index_companies():
-        sp500_api = SP500()
-        sp500_json_data = sp500_api.fetch()
-        print("Fetched sp500 json data from API")
+        # sp500_api = SP500()
+        # sp500_json_data = sp500_api.fetch()
+        # print("Fetched sp500 json data from API")
 
-        sp500_repo = SP500_table()
-        # sp500.create_table(sp500_repo.getBase())
-        sp500_repo.load_data(sp500_json_data)
-        print("loaded sp500 API data into sp500 table")
-
-
-        nasdaq_api = Nasdaq()
-        nasdaq_json_data = nasdaq_api.fetch()
-        print("Fetched Nasdaq json data from API")
-
-        nasdaq_repo = NASDAQ_table()
-        # nasdaq_repo.create_table(nasdaq_repo.getBase())
-        nasdaq_repo.load_data(nasdaq_json_data)
-        print("loaded Nasdaq API data into Nasdaq table")
-
-        dowjones_api = Dowjones()
-        dowjones_json_data = dowjones_api.fetch()
-        print("Fetched Dowjones json data from API")
-
-        dowjones_repo = DOWJONES_table()
-        # dowjones_repo.create_table(dowjones_repo.getBase())
-        dowjones_repo.load_data(dowjones_json_data)
-        print("loaded Dowjones API data into Dowjones table")
+        # sp500_repo = SP500_table()
+        # # sp500.create_table(sp500_repo.getBase())
+        # sp500_repo.load_data(sp500_json_data)
+        # print("loaded sp500 API data into sp500 table")
 
 
-        global_stocks_api = Global_stocks()
-        global_stocks_json_data = global_stocks_api.fetch()
-        print("Fetched global stocks json data from API")
+        # nasdaq_api = Nasdaq()
+        # nasdaq_json_data = nasdaq_api.fetch()
+        # print("Fetched Nasdaq json data from API")
 
-        global_stocks_repo = Global_stocks_table()
-        # globalstocks_repo.create_table(globalstocks_repo.getBase())
-        global_stocks_repo.load_data(global_stocks_json_data)
-        print("loaded Global stock API data into globalstocks table")
+        # nasdaq_repo = NASDAQ_table()
+        # # nasdaq_repo.create_table(nasdaq_repo.getBase())
+        # nasdaq_repo.load_data(nasdaq_json_data)
+        # print("loaded Nasdaq API data into Nasdaq table")
+
+        # dowjones_api = Dowjones()
+        # dowjones_json_data = dowjones_api.fetch()
+        # print("Fetched Dowjones json data from API")
+
+        # dowjones_repo = DOWJONES_table()
+        # # dowjones_repo.create_table(dowjones_repo.getBase())
+        # dowjones_repo.load_data(dowjones_json_data)
+        # print("loaded Dowjones API data into Dowjones table")
 
 
-        global_etfs_api = Global_etfs()
-        global_etfs_json_data = global_etfs_api.fetch()
-        print("Fetched global etf json data from API")
+        # global_stocks_api = Global_stocks()
+        # global_stocks_json_data = global_stocks_api.fetch()
+        # print("Fetched global stocks json data from API")
 
-        global_etfs_repo = Global_etfs_table()
-        #global_etfs_repo.create_table(global_etfs_repo.getBase())
-        global_etfs_repo.load_data(global_etfs_json_data)
-        print("loaded Global etf API data into global etf table")
+        # global_stocks_repo = Global_stocks_table()
+        # # globalstocks_repo.create_table(globalstocks_repo.getBase())
+        # global_stocks_repo.load_data(global_stocks_json_data)
+        # print("loaded Global stock API data into globalstocks table")
 
 
-        stock_price_api = Stockprices()
-        stock_price_json_data = stock_price_api.fetch()
-        print("Fetched stock price json data from API")
+        # global_etfs_api = Global_etfs()
+        # global_etfs_json_data = global_etfs_api.fetch()
+        # print("Fetched global etf json data from API")
 
-        stock_price_repo = Stock_prices_table()
-        # stock_price_repo.create_table(stock_price_repo.getBase())
-        stock_price_repo.load_data(stock_price_json_data)
-        print("loaded stock price API data into stockprices table")
+        # global_etfs_repo = Global_etfs_table()
+        # #global_etfs_repo.create_table(global_etfs_repo.getBase())
+        # global_etfs_repo.load_data(global_etfs_json_data)
+        # print("loaded Global etf API data into global etf table")
+
+
+        # stock_price_api = Stockprices()
+        # stock_price_json_data = stock_price_api.fetch()
+        # print("Fetched stock price json data from API")
+
+        # stock_price_repo = Stock_prices_table()
+        # # stock_price_repo.create_table(stock_price_repo.getBase())
+        # stock_price_repo.load_data(stock_price_json_data)
+        # print("loaded stock price API data into stockprices table")
+
+
+        historic_combined = Combine()
+        historic_price_marketcap_json_data = historic_combined.historic_price_marketcap()
+        print("Fetched price, market cap together")
+
+
+
+
+        
+
+        historic_prices_repo = Historic_prices_table()
+        historic_prices_repo.create_table(historic_prices_repo.getBase())
+        historic_prices_repo.load_data(historic_price_marketcap_json_data)
+        print("loaded prices_marktcap data into historicprices table")
+
 
 
         # historic_prices_api = Historicprices()
         # historic_prices_json_data = historic_prices_api.fetch()
         # print("Fetched price json data from API")
-
-        # historic_prices_repo = Historic_Prices_table()
-        # # historic_prices_repo.create_table(historic_prices_repo.getBase())
-        # historic_prices_repo.load_data(historic_prices_json_data)
-        # print("loaded prices API data into stockprices table")
-
-
-
-
 
 
 # from pulse.fmpapi.get_api import Historic_market_cap, Historicprices
