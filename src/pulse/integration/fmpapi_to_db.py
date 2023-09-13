@@ -17,7 +17,8 @@ from pulse.repository.index_companies import DOWJONES_table
 from pulse.repository.stock_prices import Global_stocks_table
 from pulse.repository.stock_prices import Historical_prices_table
 from pulse.repository.stock_prices import Daily_prices_table
-import datetime
+from concurrent.futures import ThreadPoolExecutor
+
 
 
 # from pulse.combine.combine import Combine
@@ -74,43 +75,41 @@ class FmpApiToDatabase():
         FmpApiToDatabase.load_Nasdaq_companies()
         FmpApiToDatabase.load_Dowjones_companies()
 
+
+
     
 
     def load_historical_prices():
-        
-    #     # Get historic stock prices
-        # Fetch SP500 table and get teh list of symbols
+        symbols = SP500_table().get_symbols()
+        def fetch_and_process_data(company_symbol):
+            historical_price_api = Historical_prices(company_symbol)
+            historical_marketcap_api = Historical_market_cap(company_symbol)
 
-        symbols = SP500_table()
-        historical_price_with_marketcap = []
-        for symbol in symbols.get_symbols():
-            historical_price_api = Historical_prices(symbol)
             historical_price_json_data = historical_price_api.fetch()
-
-        #     # Get historic Makert cap 
-            historical_marketcap_api = Historical_market_cap(symbol)
             historical_marketcap_json_data = historical_marketcap_api.fetch()
 
             symbol = historical_price_json_data['symbol']
 
-        # Create a dictionary with date as keys for market cap data
             market_cap_dict = {element["date"]: element["marketCap"] for element in historical_marketcap_json_data}
-
             
+            historical_price_with_marketcap = []
             for element in historical_price_json_data["historical"]:
                 date = element["date"]
-                market_cap = market_cap_dict.get(date)  # Lookup market cap by date
+                market_cap = market_cap_dict.get(date)
                 element["symbol"] = symbol
                 element["marketCap"] = market_cap
                 historical_price_with_marketcap.append(element)
-                #print(f"Element: {element}")    
 
-            print(f"Fetched Historical stock price json data from API for symbol: {symbol}")
+            print(f"Fetched and processed data for symbol: {symbol}")
 
             historical_prices_repo = Historical_prices_table()
             historical_prices_repo.load_data(historical_price_with_marketcap)
 
-            print(f"loaded Historical stock prices API data into Historical price table for symbol: {symbol}")
+            print(f"Loaded data into Historical prices table for symbol: {symbol}")    
+        # Use ThreadPoolExecutor to fetch and process data concurrently
+        with ThreadPoolExecutor(max_workers=10) as executor:
+            executor.map(fetch_and_process_data, symbols)
+
 
 
     def load_daily_prices():
