@@ -1,17 +1,27 @@
 from core.configuration.config import Config
 from pulse.fmpapi.get_api import GetApi
+<<<<<<< Updated upstream
+=======
+import datetime
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
 
 import requests
+=======
+>>>>>>> Stashed changes
 
 
 class Global_stocks(GetApi):
     def __init__(self)->None:
         super().__init__("stock/list?")
 
+
 class Historical_prices(GetApi):
     def __init__(self, symbol)->None :
+<<<<<<< Updated upstream
 
         query = "historical-price-full/" + symbol + "?from=2017-01-01&to=2023-09-07&"
+=======
         current_date = datetime.date.today()
 <<<<<<< Updated upstream
         date_str = current_date.strftime('%Y-%m-%d')
@@ -20,6 +30,8 @@ class Historical_prices(GetApi):
         date = current_date.strftime('%Y-%m-%d')
         from_date = super().get_from_date
         query = f"historical-price-full/{symbol}?from={from_date}&to={date}&"
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
         super().__init__(query)
     
 class Historical_market_cap(GetApi):

@@ -1,7 +1,4 @@
-from core.configuration.config import Config
 from pulse.fmpapi.get_api import GetApi
-
-import requests
 
 
 class SP500(GetApi):

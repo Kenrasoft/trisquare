@@ -17,6 +17,15 @@ from pulse.repository.index_companies import DOWJONES_table
 from pulse.repository.stock_prices import Global_stocks_table
 from pulse.repository.stock_prices import Historical_prices_table
 from pulse.repository.stock_prices import Daily_prices_table
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+import datetime
+=======
+from concurrent.futures import ThreadPoolExecutor
+
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
 
 # from pulse.combine.combine import Combine
@@ -72,6 +81,8 @@ class FmpApiToDatabase():
         FmpApiToDatabase.load_SP500_companies()
         FmpApiToDatabase.load_Nasdaq_companies()
         FmpApiToDatabase.load_Dowjones_companies()
+
+
 
     
 
