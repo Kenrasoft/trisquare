@@ -76,10 +76,11 @@ class FmpApiToDatabase():
     
 
     def load_historical_prices():
-        
     #     # Get historic stock prices
-        # Fetch SP500 table and get teh list of symbols
+        symbols = SP500_table().get_symbols()
+        def fetch_and_process_data(company_symbol):
 
+<<<<<<< Updated upstream
         symbol = "MSFT"
         historical_price_api = Historical_prices(symbol)
         historical_price_json_data = historical_price_api.fetch()
@@ -93,6 +94,10 @@ class FmpApiToDatabase():
     # Create a dictionary with date as keys for market cap data
         market_cap_dict = {element["date"]: element["marketCap"] for element in historical_marketcap_json_data}
 
+=======
+<<<<<<< Updated upstream
+        symbols = SP500_table()
+>>>>>>> Stashed changes
         historical_price_with_marketcap = []
         for element in historical_price_json_data["historical"]:
             date = element["date"]
@@ -107,7 +112,58 @@ class FmpApiToDatabase():
         historical_prices_repo = Historical_prices_table()
         historical_prices_repo.load_data(historical_price_with_marketcap)
 
+<<<<<<< Updated upstream
         print(f"loaded Historical stock prices API data into Historical price table for symbol: {symbol}")
+=======
+        # Create a dictionary with date as keys for market cap data
+            market_cap_dict = {element["date"]: element["marketCap"] for element in historical_marketcap_json_data}
+
+            
+            for element in historical_price_json_data["historical"]:
+                date = element["date"]
+                market_cap = market_cap_dict.get(date)  # Lookup market cap by date
+                element["symbol"] = symbol
+                element["marketCap"] = market_cap
+                historical_price_with_marketcap.append(element)
+                #print(f"Element: {element}")    
+
+            print(f"Fetched Historical stock price json data from API for symbol: {symbol}")
+
+            historical_prices_repo = Historical_prices_table()
+            historical_prices_repo.load_data(historical_price_with_marketcap)
+
+            print(f"loaded Historical stock prices API data into Historical price table for symbol: {symbol}")
+=======
+            historical_price_api = Historical_prices(company_symbol)
+            historical_marketcap_api = Historical_market_cap(company_symbol)
+
+            historical_price_json_data = historical_price_api.fetch()
+            historical_marketcap_json_data = historical_marketcap_api.fetch()
+
+            symbol = historical_price_json_data['symbol']
+
+            market_cap_dict = {element["date"]: element["marketCap"] for element in historical_marketcap_json_data}
+            
+            historical_price_with_marketcap = []
+            for element in historical_price_json_data["historical"]:
+                date = element["date"]
+                market_cap = market_cap_dict.get(date)
+                element["symbol"] = symbol
+                element["marketCap"] = market_cap
+                historical_price_with_marketcap.append(element)
+
+            print(f"Fetched and processed data for symbol: {symbol}")
+
+            historical_prices_repo = Historical_prices_table()
+            historical_prices_repo.load_data(historical_price_with_marketcap)
+
+            print(f"Loaded data into Historical prices table for symbol: {symbol}")    
+        # Use ThreadPoolExecutor to fetch and process data concurrently
+        with ThreadPoolExecutor(max_workers=10) as executor:
+            executor.map(fetch_and_process_data, symbols)
+
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
 
     def load_daily_prices():
@@ -122,4 +178,12 @@ class FmpApiToDatabase():
         daily_prices_repo = Daily_prices_table()
         daily_prices_repo.load_data(daily_prices_json_data)
 
+<<<<<<< Updated upstream
         print(f"loaded stock prices API data into stock price table for symbol: {symbol}")
+=======
+<<<<<<< Updated upstream
+            print(f"loaded stock prices API data into stock price table for symbol: {symbol}")
+=======
+            print(f"loaded stock prices API data into stock price table for symbol: {symbol}")
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
