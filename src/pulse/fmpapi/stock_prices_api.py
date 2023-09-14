@@ -3,9 +3,8 @@ import datetime
 
 
 class Global_stocks(GetApi):
-    def __init__(self)->None:
+    def __init__(self) -> None:
         super().__init__("stock/list?")
-
 
 class Historical_prices(GetApi):
     def __init__(self, symbol)->None :
@@ -24,3 +23,5 @@ class Daily_prices(GetApi):
     def __init__(self, symbol)->None :
         query = "quote/" + symbol +"?"
         super().__init__(query)
+        
+

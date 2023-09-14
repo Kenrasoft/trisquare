@@ -1,6 +1,5 @@
 from sqlalchemy import Column, String, DateTime, Float, Integer, BigInteger
 from sqlalchemy.ext.declarative import declarative_base
-from pulse.repository.database_connect import DatabaseConnect
 from pulse.repository.pulsedb_base import PulseDB_Base
 from datetime import datetime
 

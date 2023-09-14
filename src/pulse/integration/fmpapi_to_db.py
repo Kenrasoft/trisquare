@@ -2,7 +2,6 @@ from pulse.fmpapi.index_companies_api import SP500
 from pulse.fmpapi.index_companies_api import Nasdaq
 from pulse.fmpapi.index_companies_api import Dowjones
 from pulse.fmpapi.stock_prices_api import Global_stocks
-
 from pulse.fmpapi.stock_prices_api import Historical_prices
 from pulse.fmpapi.stock_prices_api import Historical_market_cap
 from pulse.fmpapi.stock_prices_api import Daily_prices
@@ -75,14 +74,10 @@ class FmpApiToDatabase():
         def fetch_and_process_data(company_symbol):
             historical_price_api = Historical_prices(company_symbol)
             historical_marketcap_api = Historical_market_cap(company_symbol)
-
             historical_price_json_data = historical_price_api.fetch()
             historical_marketcap_json_data = historical_marketcap_api.fetch()
-
             symbol = historical_price_json_data['symbol']
-
             market_cap_dict = {element["date"]: element["marketCap"] for element in historical_marketcap_json_data}
-            
             historical_price_with_marketcap = []
             for element in historical_price_json_data["historical"]:
                 date = element["date"]
@@ -91,16 +86,17 @@ class FmpApiToDatabase():
                 element["marketCap"] = market_cap
                 historical_price_with_marketcap.append(element)
 
+
             print(f"Fetched and processed data for symbol: {symbol}")
 
             historical_prices_repo = Historical_prices_table()
             historical_prices_repo.load_data(historical_price_with_marketcap)
 
+
             print(f"Loaded data into Historical prices table for symbol: {symbol}")    
         # Use ThreadPoolExecutor to fetch and process data concurrently
         with ThreadPoolExecutor(max_workers=10) as executor:
             executor.map(fetch_and_process_data, symbols)
-
 
 
     def load_daily_prices():
