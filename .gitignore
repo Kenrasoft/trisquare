@@ -1,2 +1,6 @@
 *.pyc
 __pycache__/
+target/
+venv/
+.pybuilder/
+.pytest_cache/

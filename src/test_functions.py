@@ -1,2 +1,2 @@
-def test_config_singleton(a, b):
+def singleton(a, b):
     return (a is b)

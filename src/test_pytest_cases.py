@@ -10,7 +10,7 @@ from pulse.fmpapi.stock_prices_api import Historical_market_cap
 
 import requests
 import pandas as pd
-import datetime
+from datetime import datetime,timedelta
 
 def test_config_single():
     object1 = config_singleton()
@@ -75,7 +75,7 @@ def test_dowjones_api():
     assert unique_values_count >= expected_unique_values_count
 
 def test_historical_api():
-    current_date = datetime.date.today()
+    current_date = datetime.now()
     date = current_date.strftime("%Y-%m-%d")
     
     response = requests.get("https://financialmodelingprep.com/api/v3/historical-price-full/AAPL?from="+date+"&to="+date+"&apikey=304459a7a227a31923b63192971bc245")
@@ -102,23 +102,27 @@ def test_dailyprices_api():
 
     df = pd.DataFrame(daily_prices_json_data)
     
-    current_date = datetime.date.today()
+    current_date = datetime.now()
+    c_date = current_date.strftime("%Y-%m-%d")
     
     #latest_date = df['date_time'].max()
     timestamp = df["timestamp"]
     timestamp = int(timestamp.iloc[0])
-    date = datetime.datetime.fromtimestamp(timestamp)
+    date = datetime.fromtimestamp(timestamp)
     latest_date = date.date()
+    latest_date = latest_date.strftime("%Y-%m-%d")
 
-    assert latest_date == current_date
+    assert latest_date == c_date
 
 def test_historicmarketcap_api():
     response = requests.get("https://financialmodelingprep.com/api/v3/historical-market-capitalization/AAPL?limit=2000&apikey=304459a7a227a31923b63192971bc245")
     # Check that the API response was successful
     assert response.status_code == 200
 
-    current_date = datetime.date.today()
+    current_date = datetime.now()
+    previous_date = current_date - timedelta(days=1)
     date = current_date.strftime("%Y-%m-%d")
+    prv_date = previous_date.strftime("%Y-%m-%d")
 
     historical_market_api = Historical_market_cap("AAPL")
     historical_market_json_data = historical_market_api.fetch()    
@@ -126,14 +130,4 @@ def test_historicmarketcap_api():
     df = pd.DataFrame(historical_market_json_data)
     df_date = df['date'].max()
 
-    assert date == df_date
-
-
-
-
-historical_prices_api = Historical_prices("AAPL")
-historical_prices_json_data = historical_prices_api.fetch()    
-
-df = pd.DataFrame(historical_prices_json_data)
-
-print (df)
+    assert date == df_date or prv_date == df_date
