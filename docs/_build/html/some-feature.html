@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Documentation structure &mdash; Trisquare  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="src" href="modules.html" />
+    <link rel="prev" title="Welcome to Trisquare’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Trisquare
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Documentation structure</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#contributing">Contributing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">src</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Trisquare</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Documentation structure</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/some-feature.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="documentation-structure">
+<h1>Documentation structure<a class="headerlink" href="#documentation-structure" title="Link to this heading"></a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h2>
+<p>Currently, finance professionals rely on manual data collection and analysis from various sources. There’s a lack of a consolidated platform to assess sector-wise market capitalization and track fund movement across sectors.</p>
+<p>TriSquare will address these challenges by offering a user-friendly interface to access real-time stock data, visualize sector-wise market capitalization, and provide insights into the flow of funds between sectors.</p>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<ol class="arabic">
+<li><p>Install git: <a class="reference external" href="https://git-scm.com/downloads">Git Downloads</a></p></li>
+<li><p>Install Postgresql and set the following credentials:</p>
+<ul class="simple">
+<li><p>Username: Postgres</p></li>
+<li><p>Password: Kenra123</p></li>
+</ul>
+</li>
+<li><p>Create a Database named pulse.</p></li>
+<li><p>Clone the repository to your local machine using the following command:</p>
+<p>git clone https://github.com/kenrasoftorg/trisquare.git</p>
+</li>
+<li><p>Open the cloned folder <code class="docutils literal notranslate"><span class="pre">trisquare/src/pulse/scripts/pulseschema.sql</span></code>.</p></li>
+<li><p>Run the table creation queries in PostgreSQL under the query tool or SQL editor and make sure tables are created.</p></li>
+<li><p>Open a terminal in VSCode or CMD.</p></li>
+<li><p>Navigate to the project directory <code class="docutils literal notranslate"><span class="pre">trisquare</span></code>.</p></li>
+<li><p>Type the following command to install all the requirements and dependencies:</p>
+<p>pip install -r requirements.txt</p>
+</li>
+<li><p>If you face errors for a few packages, continue to the next step.</p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">trisquare/src/main.py</span></code>.</p></li>
+<li><p>If you encounter a “module not found” or “package not found” error, use the following command to install the missing package. For example:</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="p">{</span><span class="n">packagename</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>And then rerun the <code class="docutils literal notranslate"><span class="pre">dataloader.py</span></code> script.</p>
+<ol class="arabic simple" start="13">
+<li><p>You will get the data in your database.</p></li>
+<li><p>Creating a connection in DBeaver using the configurational details mentioned under ‘Configuration’ section.</p></li>
+</ol>
+</section>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading"></a></h2>
+<p>Create a connection to the Data base using:</p>
+<ul class="simple">
+<li><p>Set the following credentials:</p>
+<ul>
+<li><p>Username: postgres</p></li>
+<li><p>Password: Kenra123</p></li>
+<li><p>Database: pulse</p></li>
+<li><p>Hostname: 127.0.0.1</p></li>
+<li><p>Port: 5432</p></li>
+</ul>
+</li>
+</ul>
+<p>Access the financial modelling API using:</p>
+<ul class="simple">
+<li><p>Set the following credentials:</p>
+<ul>
+<li><p>uri: https://financialmodelingprep.com/api/v3/</p></li>
+<li><p>key: apikey=304459a7a227a31923b63192971bc245</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="contributing">
+<h2>Contributing<a class="headerlink" href="#contributing" title="Link to this heading"></a></h2>
+<p>Team members contributed to the Project:</p>
+<ul class="simple">
+<li><p>Project owners</p>
+<ul>
+<li><p>Anand</p></li>
+<li><p>Murali</p></li>
+</ul>
+</li>
+<li><p>Team members</p>
+<ul>
+<li><p>Afreen</p></li>
+<li><p>Anusha</p></li>
+<li><p>Avinash</p></li>
+<li><p>Charan</p></li>
+<li><p>Mahendra</p></li>
+<li><p>Manasa</p></li>
+<li><p>Megha</p></li>
+<li><p>Om sai</p></li>
+<li><p>Shobhana</p></li>
+<li><p>Sirisha</p></li>
+<li><p>Suneetha</p></li>
+<li><p>Tejus</p></li>
+<li><p>Vani</p></li>
+<li><p>Vijaya</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to Trisquare’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="modules.html" class="btn btn-neutral float-right" title="src" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Kenrasoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

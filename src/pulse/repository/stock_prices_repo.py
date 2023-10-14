@@ -1,3 +1,9 @@
+"""
+The purpose of this stock_prices_repo.py file is to create base classes for the stocks, historic and daily prices data.
+
+This module imports PulseDB_Base class from pulse.repository.pulsedb_base.py
+"""
+
 from sqlalchemy import Column, String, DateTime, Float, Integer, BigInteger
 from sqlalchemy.ext.declarative import declarative_base
 from pulse.repository.pulsedb_base import PulseDB_Base
@@ -6,10 +12,14 @@ from datetime import datetime
 Base = declarative_base()
 
 class Global_stocks_table(Base, PulseDB_Base):
-# Entity class for the DB table Global companies. 
-
-# Manage all the operations like loading the data from the global stocks table.
-
+    """
+    Entity class for the DB table globalstocks.
+    
+    Helps in loading the data into globalstocks table by creating instances (objects for the class).
+    
+    :param Base: with the help of SQL Alchemy's ORM features, we generate the Base class object using the declarative_base() fucntion which is helpful to define the columns and for creating instances.  
+    :param PulseDB_Base: we are passing the PulseDB_Base class object as a parameter for this class to override the convert() method.
+    """
 
     __tablename__ = 'globalstocks'
     symbol = Column(String, primary_key=True)
@@ -24,6 +34,14 @@ class Global_stocks_table(Base, PulseDB_Base):
         return Base
 
     def convert(self, element):
+        """
+        Takes each key-value pair in the json data returned from the API and initializes an instance of the class Global_stocks_table.
+        
+        :param element: One element in the JSON data.
+
+        :return: row, which is the object of Global_stocks_table class to the load_data() function in pulsedb_base.py which then adds this row into the data base table.
+        """
+
         row = Global_stocks_table(
             symbol=element["symbol"],
             company_name=element["name"],
@@ -35,8 +53,14 @@ class Global_stocks_table(Base, PulseDB_Base):
         return row
 
 class Daily_prices_table(Base, PulseDB_Base):
-# Entity class for the DB table daily_prices. 
-# Manage all the operations like loading the data from the daily_prices table.
+    """
+    Entity class for the DB table daily_prices.
+    
+    Helps in loading the data into daily_prices table by creating instances (objects for the class).
+    
+    :param Base: with the help of SQL Alchemy's ORM features, we generate the Base class object using the declarative_base() fucntion which is helpful to define the columns and for creating instances.  
+    :param PulseDB_Base: we are passing the PulseDB_Base class object as a parameter for this class to override the convert() method.
+    """
 
     __tablename__ = 'daily_prices'
     symbol = Column(String, primary_key=True)
@@ -66,6 +90,14 @@ class Daily_prices_table(Base, PulseDB_Base):
         return Base
 
     def convert(self, element):
+        """
+        Takes each key-value pair in the json data returned from the API and initializes an instance of the class Daily_prices_table.
+        
+        :param element: One element in the JSON data.
+
+        :return: row, which is the object of Daily_prices_table class to the load_data() function in pulsedb_base.py which then adds this row into the data base table.
+        """
+
         row = Daily_prices_table(
                 symbol=element["symbol"],
                 date_time = datetime.fromtimestamp(element["timestamp"]),
@@ -94,8 +126,14 @@ class Daily_prices_table(Base, PulseDB_Base):
 
 
 class Historical_prices_table(Base, PulseDB_Base):
-# Entity class for the DB table historical_prices. 
-# Manage all the operations like loading the data from the historical_prices table.
+    """
+    Entity class for the DB table historical_prices.
+    
+    Helps in loading the data into historical_prices table by creating instances (objects for the class).
+    
+    :param Base: with the help of SQL Alchemy's ORM features, we generate the Base class object using the declarative_base() fucntion which is helpful to define the columns and for creating instances.  
+    :param PulseDB_Base: we are passing the PulseDB_Base class object as a parameter for this class to override the convert() method.
+    """
 
     __tablename__ = 'historical_prices'
     symbol = Column(String, primary_key=True)
@@ -118,6 +156,14 @@ class Historical_prices_table(Base, PulseDB_Base):
         return Base
 
     def convert(self, element):
+        """
+        Takes each key-value pair in the json data returned from the API and initializes an instance of the class Historical_prices_table.
+        
+        :param element: One element in the JSON data.
+        
+        :return: row, which is the object of Historical_prices_table class to the load_data() function in pulsedb_base.py which then adds this row into the data base table.
+        """
+        
         row = Historical_prices_table(
                 symbol=element["symbol"],
                 date_time=element["date"],

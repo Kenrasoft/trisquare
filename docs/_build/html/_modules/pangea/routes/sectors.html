@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pangea.routes.sectors &mdash; Trisquare  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Trisquare
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../some-feature.html">Documentation structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">src</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Trisquare</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">pangea.routes.sectors</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pangea.routes.sectors</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The purpose of this sectors.py file is to create routes using FlaskAPI (to query the data from the data base and to show it in the UI).</span>
+
+<span class="sd">This module imports the Queries file from pulse.repository.queries, All the methods in this file make use of the the functionalities of queries.py file.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Blueprint</span><span class="p">,</span> <span class="n">jsonify</span><span class="p">,</span> <span class="n">request</span>
+<span class="kn">from</span> <span class="nn">pulse.repository.queries</span> <span class="kn">import</span> <span class="n">Queries</span>
+<span class="c1"># The sectors.py here is used to create the routes using FlaskAPI.</span>
+<span class="n">sectors</span> <span class="o">=</span> <span class="n">Blueprint</span><span class="p">(</span><span class="s2">&quot;sectors&quot;</span><span class="p">,</span> <span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1"># This route gets the method in Queries class with query of getting sectors in sp500 </span>
+<span class="c1"># and shows in /sectors route.</span>
+<div class="viewcode-block" id="get_sectors">
+<a class="viewcode-back" href="../../../pangea.routes.html#pangea.routes.sectors.get_sectors">[docs]</a>
+<span class="nd">@sectors</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/sectors&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">get_sectors</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This route gets the method in Queries class with query of getting sectors in sp500 and shows in /sectors route.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">query</span> <span class="o">=</span> <span class="n">Queries</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">query</span><span class="o">.</span><span class="n">get_sectors</span><span class="p">())</span></div>
+
+
+<span class="c1"># This route gets the method in Queries class with query of getting subsectorssectors</span>
+<span class="c1">#  for perticular sector in sp500 and shows in /sectors/subsectors route.</span>
+<div class="viewcode-block" id="get_sectors_subsectors">
+<a class="viewcode-back" href="../../../pangea.routes.html#pangea.routes.sectors.get_sectors_subsectors">[docs]</a>
+<span class="nd">@sectors</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/sectors/subsectors&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">get_sectors_subsectors</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This route gets the method in Queries class with query of getting subsectors for particular sector in sp500 and shows in /sectors/subsectors route.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">query</span> <span class="o">=</span> <span class="n">Queries</span><span class="p">()</span>
+    <span class="n">selected_sector</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sector&#39;</span><span class="p">)</span>  
+    <span class="n">subsectors</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">get_sectors_subsectors</span><span class="p">(</span><span class="n">selected_sector</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">subsectors</span><span class="p">)</span></div>
+
+
+<span class="c1"># This route gets the method in Queries class with query of getting marketcap</span>
+<span class="c1"># for perticular sector in sp500 and shows in /sectors/&lt;string:selected_sector&gt;/marketcap.</span>
+<div class="viewcode-block" id="get_sector_marketcap">
+<a class="viewcode-back" href="../../../pangea.routes.html#pangea.routes.sectors.get_sector_marketcap">[docs]</a>
+<span class="nd">@sectors</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/sectors/&lt;string:selected_sector&gt;/marketcap&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">get_sector_marketcap</span><span class="p">(</span><span class="n">selected_sector</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This route gets the method in Queries class with query of getting marketcap for perticular sector in sp500 and shows in /sectors/&lt;string:selected_sector&gt;/marketcap.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">query</span> <span class="o">=</span> <span class="n">Queries</span><span class="p">()</span>
+    <span class="n">market_cap</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">get_sector_marketcap</span><span class="p">(</span><span class="n">selected_sector</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">market_cap</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># Add a new route for retrieving market cap data for all sectors</span>
+<div class="viewcode-block" id="get_all_sectors_marketcaps">
+<a class="viewcode-back" href="../../../pangea.routes.html#pangea.routes.sectors.get_all_sectors_marketcaps">[docs]</a>
+<span class="nd">@sectors</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/sectors/marketcap&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">get_all_sectors_marketcaps</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Adding a new route for retrieving market cap data for all sectors.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">query</span> <span class="o">=</span> <span class="n">Queries</span><span class="p">()</span>
+    <span class="c1"># Call the method to fetch market cap data for all sectors</span>
+    <span class="n">market_caps</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">get_all_sectors_marketcap</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">market_caps</span><span class="p">)</span></div>
+
+    
+<span class="c1"># Add a new route for retrieving periodic market cap data for all sectors</span>
+<div class="viewcode-block" id="get_periodic_marketcap_data">
+<a class="viewcode-back" href="../../../pangea.routes.html#pangea.routes.sectors.get_periodic_marketcap_data">[docs]</a>
+<span class="nd">@sectors</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/sectors/periodic_marketcap_data&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">get_periodic_marketcap_data</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Adding a new route for retrieving periodic market cap data for all sectors.</span>
+
+<span class="sd">    Time periods - 1 day, 1 week, 1 month, 3 months, 6 months, 9 months, 1 year.</span>
+
+<span class="sd">    This method calls get_periodic_marketcap_for_sectors() from pulse.repository.queries</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">query</span> <span class="o">=</span> <span class="n">Queries</span><span class="p">()</span>
+    <span class="c1"># Call the method to fetch market cap data for all sectors</span>
+    <span class="n">periodic_market_caps</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">get_periodic_marketcap_for_sectors</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">periodic_market_caps</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Kenrasoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

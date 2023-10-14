@@ -1,3 +1,9 @@
+"""
+The purpose of this fmpapi_to_db.py file is to integrate the functionalities between the fmpapi (api related) and the repository (data base related) i.e., to serve as a connection between sending the data accessed using the API to the data base.
+
+This module imports all the required classes (look into source code link here) from both the fmpapi and repository folders.
+
+"""
 
 from pulse.fmpapi.index_companies_api import SP500
 from pulse.fmpapi.index_companies_api import Nasdaq
@@ -20,14 +26,21 @@ from concurrent.futures import ThreadPoolExecutor
 
 
 class FmpApiToDatabase():
-# Integration layer to extract the FMPAPI data and load into . 
-# This data is passed to the tables for loading. 
-# Mainly focus on loading all the index companies from SP500, NASDAQ and DOWJONES
+    """
+    Integration layer to extract the FMPAPI data and load it into the database.
+
+    All the functions under this class load the data from the API using the fetch() function in get_api.py and load that data into respective tables using the load_data() function in the pulsedb_base.py.
+
+    """
 
 # {classname}.create_table({class_repo}.getBase()) is used to create table for class. 
 # Generally we run it when we dont have a table createdin pulse DB.
 
     def load_SP500_companies():
+        """
+        This function is to load the sp500 companies data into the data base (SP500_table).
+
+        """
 
         sp500_api = SP500()
         sp500_json_data = sp500_api.fetch()
@@ -40,6 +53,10 @@ class FmpApiToDatabase():
         print("loaded sp500 API data into sp500 table")
 
     def load_Nasdaq_companies():
+        """
+        This function is to load the Nasdaq companies data into the data base (NASDAQ_table).
+
+        """
 
         nasdaq_api = Nasdaq()
         nasdaq_json_data = nasdaq_api.fetch()
@@ -52,6 +69,11 @@ class FmpApiToDatabase():
         print("loaded Nasdaq API data into Nasdaq table")
 
     def load_Dowjones_companies():
+        """
+        This function is to load the Dowjones companies data into the data base (DOWJONES_table).
+
+        """
+
         dowjones_api = Dowjones()
         dowjones_json_data = dowjones_api.fetch()
         print("Fetched Dowjones json data from API")
@@ -63,13 +85,22 @@ class FmpApiToDatabase():
         print("loaded Dowjones API data into Dowjones table")
 
     def load_index_companies():
-        #This method is used to load all the index stocks.
+        """
+        This method is used to load all the stocks of index companies.
+
+        """
+        
         FmpApiToDatabase.load_SP500_companies()
         FmpApiToDatabase.load_Nasdaq_companies()
         FmpApiToDatabase.load_Dowjones_companies()
 
 
     def load_global_stocks():
+        """
+        This function is to load the gobal stocks data into the data base (Global_stocks_table).
+
+        """
+
         global_stocks_api = Global_stocks()
         global_stocks_json_data = global_stocks_api.fetch()
         print("Fetched global stocks json data from API")
@@ -82,20 +113,38 @@ class FmpApiToDatabase():
 
     
     def load_historical_prices():
+        """
+        This function is to load the historical prices data, just calls the function load_historical_prices_no_threading().
+
+        """
+
         FmpApiToDatabase.load_historical_prices_no_threading()
 
     def load_historical_prices_with_threading():
-        # We are here getting historic prices of SP500 stocks. So fetching the symbols 
-        # of SP500
+        """
+        Fetching historical data is going to make lot of calls to the API. So, threading is introduced to make the processing faster.
+
+        Here, we are just getting historic prices of SP500 stocks using the symbols of SP500 companies.
+
+        It calls the function load_historical_prices_for_symbol() to get the data.
+        
+        we are not actually using it for now, but we might use it later.
+        """
+
         symbols = Queries().get_symbols()
 
         # As this is going to make lot of calls, the threading is introduced to make the processing faster
         with ThreadPoolExecutor(max_workers=15) as executor:
             executor.map(FmpApiToDatabase.load_historical_prices_for_symbol, symbols)
 
-    # Fetch the historical market cap data and pricing information
-    # and then load the data into database 
+
     def load_historical_prices_for_symbol(company_symbol): 
+        """
+        Fetch the historical market cap data and pricing information and then load the data into database.
+
+        :param company_symbol: Symbols of sp500 companies passed  by the load_historical_prices_with_threading() method.
+
+        """
         
         historical_price_api = Historical_prices(company_symbol)
         historical_marketcap_api = Historical_market_cap(company_symbol)
@@ -125,6 +174,12 @@ class FmpApiToDatabase():
             print(f"Historical market data is not available for the symbol: {company_symbol} ")    
 
     def load_historical_prices_no_threading(): 
+        """
+        Used to load the historical prices.
+        
+        Does the same functionality as load_historical_prices_with_threading -- just that threading process is not involved in this.
+        """
+
         symbols = Queries().get_symbols()
         for company_symbol in symbols: 
             
@@ -157,6 +212,11 @@ class FmpApiToDatabase():
 
 
     def load_daily_prices():
+        """
+        This function is to load the daily prices of SP500 stocks data into the data base (Daily_prices_table).
+
+        """
+        
         # We are here getting daily prices of SP500 stocks. So fetching the symbols 
         # of SP500
         symbols = Queries()

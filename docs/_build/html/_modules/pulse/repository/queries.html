@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pulse.repository.queries &mdash; Trisquare  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Trisquare
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../some-feature.html">Documentation structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">src</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Trisquare</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">pulse.repository.queries</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pulse.repository.queries</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The purpose of this queries.py file is to generate some queries which might be frequently used across the application.</span>
+
+<span class="sd">This module imports SP500_table, Daily_prices_table and DatabaseConnect. </span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">pulse.repository.database_connect</span> <span class="kn">import</span> <span class="n">DatabaseConnect</span>
+<span class="kn">from</span> <span class="nn">pulse.repository.index_companies_repo</span> <span class="kn">import</span> <span class="n">SP500_table</span>
+<span class="kn">from</span> <span class="nn">pulse.repository.stock_prices_repo</span> <span class="kn">import</span> <span class="n">Daily_prices_table</span>
+<span class="kn">from</span> <span class="nn">pulse.repository.stock_prices_repo</span> <span class="kn">import</span> <span class="n">Historical_prices_table</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">func</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">from</span> <span class="nn">dateutil.relativedelta</span> <span class="kn">import</span> <span class="n">relativedelta</span>
+
+<span class="c1"># This class has all the different queries of different tables that can be used.</span>
+
+<div class="viewcode-block" id="Queries">
+<a class="viewcode-back" href="../../../pulse.repository.html#pulse.repository.queries.Queries">[docs]</a>
+<span class="k">class</span> <span class="nc">Queries</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class has methods to generate queries like getting sectors and sub sectors informations along with the market cap.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Queries.get_sectors">
+<a class="viewcode-back" href="../../../pulse.repository.html#pulse.repository.queries.Queries.get_sectors">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_sectors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Queries the SP500 table to get the list of all the distinct sectors.</span>
+
+<span class="sd">        :return: All the names of sectors as a list.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">db_connector</span> <span class="o">=</span> <span class="n">DatabaseConnect</span><span class="p">()</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="n">db_connector</span><span class="o">.</span><span class="n">connect_db</span><span class="p">()</span>
+        <span class="k">with</span> <span class="n">session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+            <span class="c1"># Query the database for sectors</span>
+            <span class="n">sectors</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">SP500_table</span><span class="o">.</span><span class="n">sector</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+            <span class="c1"># Convert the data to a list of dictionaries</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;sector&quot;</span><span class="p">:</span> <span class="n">sector</span><span class="p">}</span> <span class="k">for</span> <span class="n">sector</span><span class="p">,</span> <span class="ow">in</span> <span class="n">sectors</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">data</span></div>
+
+        
+<div class="viewcode-block" id="Queries.get_sectors_subsectors">
+<a class="viewcode-back" href="../../../pulse.repository.html#pulse.repository.queries.Queries.get_sectors_subsectors">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_sectors_subsectors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selected_sector</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Queries the SP500 table to get the list of all the distinct sectors and sub sectors.</span>
+
+<span class="sd">        If you just wish to get the data of all the sub sectors under a particular sector, you could pass that sector name as the argument.</span>
+
+<span class="sd">        :param selected_sector:  specific sector name</span>
+
+<span class="sd">        :return: All the names of sectors, subsectors as a list.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">db_connector</span> <span class="o">=</span> <span class="n">DatabaseConnect</span><span class="p">()</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="n">db_connector</span><span class="o">.</span><span class="n">connect_db</span><span class="p">()</span>
+        <span class="k">with</span> <span class="n">session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">selected_sector</span><span class="p">:</span>
+                <span class="c1"># Query the database for subsectors based on the selected sector</span>
+                <span class="n">sectors_and_subsectors</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">SP500_table</span><span class="o">.</span><span class="n">sector</span><span class="p">,</span> <span class="n">SP500_table</span><span class="o">.</span><span class="n">subsector</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">SP500_table</span><span class="o">.</span><span class="n">sector</span> <span class="o">==</span> <span class="n">selected_sector</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Query all subsectors</span>
+                <span class="n">sectors_and_subsectors</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">SP500_table</span><span class="o">.</span><span class="n">sector</span><span class="p">,</span> <span class="n">SP500_table</span><span class="o">.</span><span class="n">subsector</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+        <span class="c1"># Convert the data to a list of dictionaries</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;sector&quot;</span><span class="p">:</span> <span class="n">sector</span><span class="p">,</span> <span class="s2">&quot;subSector&quot;</span><span class="p">:</span> <span class="n">subsector</span><span class="p">}</span> <span class="k">for</span> <span class="n">sector</span><span class="p">,</span> <span class="n">subsector</span> <span class="ow">in</span> <span class="n">sectors_and_subsectors</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">data</span></div>
+
+        
+<div class="viewcode-block" id="Queries.get_symbols">
+<a class="viewcode-back" href="../../../pulse.repository.html#pulse.repository.queries.Queries.get_symbols">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_symbols</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        To list down the symbols of all the sp500 companies. </span>
+
+<span class="sd">        :return: All the symbols as a list.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">db_connector</span> <span class="o">=</span> <span class="n">DatabaseConnect</span><span class="p">()</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="n">db_connector</span><span class="o">.</span><span class="n">connect_db</span><span class="p">()</span>
+        <span class="k">with</span> <span class="n">session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+            <span class="n">symbols_query</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">SP500_table</span><span class="o">.</span><span class="n">symbol</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+            <span class="n">symbols</span> <span class="o">=</span> <span class="p">[</span><span class="n">symbol</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="n">symbols_query</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">symbols</span></div>
+
+        
+<div class="viewcode-block" id="Queries.get_sector_marketcap">
+<a class="viewcode-back" href="../../../pulse.repository.html#pulse.repository.queries.Queries.get_sector_marketcap">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_sector_marketcap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selected_sector</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the total market cap for sp500 companies in the selected sector. </span>
+
+<span class="sd">        :param selected_sector: specific sector name</span>
+
+<span class="sd">        :return: Market cap for the specific sector as a dictionary.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">db_connector</span> <span class="o">=</span> <span class="n">DatabaseConnect</span><span class="p">()</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="n">db_connector</span><span class="o">.</span><span class="n">connect_db</span><span class="p">()</span>
+        <span class="k">with</span> <span class="n">session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+        <span class="c1"># Query the SP500_table to get all symbols in the selected sector</span>
+            <span class="n">sector_companies</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">SP500_table</span><span class="o">.</span><span class="n">symbol</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">SP500_table</span><span class="o">.</span><span class="n">sector</span> <span class="o">==</span> <span class="n">selected_sector</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+            <span class="n">symbols</span> <span class="o">=</span> <span class="p">[</span><span class="n">company</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">company</span> <span class="ow">in</span> <span class="n">sector_companies</span><span class="p">]</span>
+
+            <span class="c1"># Calculate the total market cap for companies in the selected sector</span>
+            <span class="n">total_marketcap</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Daily_prices_table</span><span class="o">.</span><span class="n">market_cap</span><span class="p">))</span>
+                <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Daily_prices_table</span><span class="o">.</span><span class="n">symbol</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="n">symbols</span><span class="p">))</span>
+                <span class="o">.</span><span class="n">scalar</span><span class="p">()</span>
+            <span class="p">)</span>
+            <span class="n">formatted_market_cap</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">total_marketcap</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;sector&quot;</span><span class="p">:</span> <span class="n">selected_sector</span><span class="p">,</span> <span class="s2">&quot;total_marketcap&quot;</span><span class="p">:</span> <span class="n">formatted_market_cap</span><span class="p">}</span></div>
+
+    
+
+
+<div class="viewcode-block" id="Queries.get_all_sectors_marketcap">
+<a class="viewcode-back" href="../../../pulse.repository.html#pulse.repository.queries.Queries.get_all_sectors_marketcap">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_all_sectors_marketcap</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the total market cap for sp500 companies for all the sectors. </span>
+
+<span class="sd">        :return: Market cap for the all the sectors as a dictionary.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">db_connector</span> <span class="o">=</span> <span class="n">DatabaseConnect</span><span class="p">()</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="n">db_connector</span><span class="o">.</span><span class="n">connect_db</span><span class="p">()</span>
+        
+        <span class="k">with</span> <span class="n">session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+            <span class="c1"># Query all sectors in SP500</span>
+            <span class="n">sectors</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">SP500_table</span><span class="o">.</span><span class="n">sector</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+            <span class="n">sectors</span> <span class="o">=</span> <span class="p">[</span><span class="n">sector</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">sector</span> <span class="ow">in</span> <span class="n">sectors</span><span class="p">]</span>
+
+            <span class="n">sector_marketcaps</span> <span class="o">=</span> <span class="p">{}</span>
+            
+            <span class="k">for</span> <span class="n">sector</span> <span class="ow">in</span> <span class="n">sectors</span><span class="p">:</span>
+                <span class="c1"># Query the SP500_table to get all symbols in the current sector</span>
+                <span class="n">sector_companies</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">SP500_table</span><span class="o">.</span><span class="n">symbol</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">SP500_table</span><span class="o">.</span><span class="n">sector</span> <span class="o">==</span> <span class="n">sector</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+                <span class="n">symbols</span> <span class="o">=</span> <span class="p">[</span><span class="n">company</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">company</span> <span class="ow">in</span> <span class="n">sector_companies</span><span class="p">]</span>
+
+                <span class="c1"># Calculate the total market cap for companies in the current sector</span>
+                <span class="n">total_marketcap</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Daily_prices_table</span><span class="o">.</span><span class="n">market_cap</span><span class="p">))</span>
+                    <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Daily_prices_table</span><span class="o">.</span><span class="n">symbol</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="n">symbols</span><span class="p">))</span>
+                    <span class="o">.</span><span class="n">scalar</span><span class="p">()</span>
+                <span class="p">)</span>
+
+                <span class="c1"># Format the market cap for the current sector</span>
+                <span class="n">formatted_market_cap</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">total_marketcap</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span>
+                
+                <span class="c1"># Store the market cap for the sector in the dictionary</span>
+                <span class="n">sector_marketcaps</span><span class="p">[</span><span class="n">sector</span><span class="p">]</span> <span class="o">=</span> <span class="n">formatted_market_cap</span>
+        
+        <span class="k">return</span> <span class="n">sector_marketcaps</span></div>
+
+    
+<div class="viewcode-block" id="Queries.get_previous_working_date">
+<a class="viewcode-back" href="../../../pulse.repository.html#pulse.repository.queries.Queries.get_previous_working_date">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_previous_working_date</span><span class="p">(</span><span class="n">previous_date</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method is to Calculate the previous date by subtracting one day from the current date. </span>
+
+<span class="sd">        :param previous_date: The date for which you want to calculate the previous working date.</span>
+
+<span class="sd">        :return: The previous working day based on the argument passed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">date</span> <span class="o">=</span> <span class="n">previous_date</span>
+        <span class="k">if</span> <span class="n">date</span><span class="o">.</span><span class="n">weekday</span><span class="p">()</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>  <span class="c1"># Saturday</span>
+            <span class="n">previous_working_day</span> <span class="o">=</span> <span class="n">date</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">date</span><span class="o">.</span><span class="n">weekday</span><span class="p">()</span> <span class="o">==</span> <span class="mi">6</span><span class="p">:</span>  <span class="c1"># Sunday</span>
+            <span class="n">previous_working_day</span> <span class="o">=</span> <span class="n">date</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">previous_working_day</span> <span class="o">=</span> <span class="n">date</span>
+
+        <span class="k">return</span> <span class="n">previous_working_day</span></div>
+
+    
+<div class="viewcode-block" id="Queries.get_periodic_marketcap_for_sectors">
+<a class="viewcode-back" href="../../../pulse.repository.html#pulse.repository.queries.Queries.get_periodic_marketcap_for_sectors">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_periodic_marketcap_for_sectors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to get marketcap data over different time periods - 1 day, 1 week, 1 months, 3 months, 6 months, 1 year.</span>
+
+<span class="sd">        we use the return value of get_previous_working_date() method in this.</span>
+
+<span class="sd">        :return: The periodic market cap for sectors.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">db_connector</span> <span class="o">=</span> <span class="n">DatabaseConnect</span><span class="p">()</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="n">db_connector</span><span class="o">.</span><span class="n">connect_db</span><span class="p">()</span>
+
+        <span class="c1"># Get today&#39;s date as a datetime object</span>
+        <span class="n">today</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+        <span class="n">today</span> <span class="o">=</span> <span class="n">today</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Calculate the previous date by subtracting one day</span>
+        <span class="n">previous_date</span> <span class="o">=</span> <span class="n">today</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">previous_working_date</span> <span class="o">=</span> <span class="n">Queries</span><span class="o">.</span><span class="n">get_previous_working_date</span><span class="p">(</span><span class="n">previous_date</span><span class="p">)</span>
+
+        <span class="c1"># Calculate the one week back date by subtracting 7 days</span>
+        <span class="n">oneweek_back_Date</span> <span class="o">=</span> <span class="n">today</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+        <span class="n">oneweek_back_working_date</span> <span class="o">=</span> <span class="n">Queries</span><span class="o">.</span><span class="n">get_previous_working_date</span><span class="p">(</span><span class="n">oneweek_back_Date</span><span class="p">)</span>
+
+        <span class="c1"># Calculate the date one month back</span>
+        <span class="n">one_month_back</span> <span class="o">=</span> <span class="n">today</span> <span class="o">-</span> <span class="n">relativedelta</span><span class="p">(</span><span class="n">months</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>   
+        <span class="n">one_month_back_working_date</span> <span class="o">=</span> <span class="n">Queries</span><span class="o">.</span><span class="n">get_previous_working_date</span><span class="p">(</span><span class="n">one_month_back</span><span class="p">)</span>
+
+        <span class="c1"># Calculate the date three months back</span>
+        <span class="n">three_months_back</span> <span class="o">=</span> <span class="n">today</span> <span class="o">-</span> <span class="n">relativedelta</span><span class="p">(</span><span class="n">months</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">three_months_back_working_date</span> <span class="o">=</span> <span class="n">Queries</span><span class="o">.</span><span class="n">get_previous_working_date</span><span class="p">(</span><span class="n">three_months_back</span><span class="p">)</span>
+
+        <span class="c1"># Calculate the date six months back</span>
+        <span class="n">six_months_back</span> <span class="o">=</span> <span class="n">today</span> <span class="o">-</span> <span class="n">relativedelta</span><span class="p">(</span><span class="n">months</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+        <span class="n">six_months_back_working_date</span> <span class="o">=</span> <span class="n">Queries</span><span class="o">.</span><span class="n">get_previous_working_date</span><span class="p">(</span><span class="n">six_months_back</span><span class="p">)</span>
+
+        <span class="c1"># Calculate the date one year back, considering leap years</span>
+        <span class="n">one_year_back</span> <span class="o">=</span> <span class="n">today</span> <span class="o">-</span> <span class="n">relativedelta</span><span class="p">(</span><span class="n">years</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">one_year_back_working_date</span> <span class="o">=</span> <span class="n">Queries</span><span class="o">.</span><span class="n">get_previous_working_date</span><span class="p">(</span><span class="n">one_year_back</span><span class="p">)</span>
+
+
+        <span class="k">with</span> <span class="n">session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+            <span class="c1"># Query all sectors in SP500</span>
+            <span class="n">sectors</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">SP500_table</span><span class="o">.</span><span class="n">sector</span><span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+            <span class="n">sectors</span> <span class="o">=</span> <span class="p">[</span><span class="n">sector</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">sector</span> <span class="ow">in</span> <span class="n">sectors</span><span class="p">]</span>
+
+            <span class="n">periodic_marketcap_for_sectors</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">sector_periodic_marketcap_data</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">sector</span> <span class="ow">in</span> <span class="n">sectors</span><span class="p">:</span>
+                <span class="c1"># Query the SP500_table to get all symbols in the current sector</span>
+                <span class="n">sector_companies</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">SP500_table</span><span class="o">.</span><span class="n">symbol</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">SP500_table</span><span class="o">.</span><span class="n">sector</span> <span class="o">==</span> <span class="n">sector</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+                <span class="n">symbols</span> <span class="o">=</span> <span class="p">[</span><span class="n">company</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">company</span> <span class="ow">in</span> <span class="n">sector_companies</span><span class="p">]</span>
+
+                <span class="c1"># Calculate the total market cap for companies in the current sector</span>
+                <span class="n">current_marketcap</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Historical_prices_table</span><span class="o">.</span><span class="n">market_cap</span><span class="p">))</span>
+                    <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Historical_prices_table</span><span class="o">.</span><span class="n">symbol</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="n">symbols</span><span class="p">),</span> <span class="n">func</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="n">Historical_prices_table</span><span class="o">.</span><span class="n">date_time</span><span class="p">)</span> <span class="o">==</span> <span class="n">today</span><span class="p">)</span>
+                    <span class="o">.</span><span class="n">scalar</span><span class="p">()</span>
+                <span class="p">)</span>
+
+                <span class="n">previous_marketcap</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Historical_prices_table</span><span class="o">.</span><span class="n">market_cap</span><span class="p">))</span>
+                    <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Historical_prices_table</span><span class="o">.</span><span class="n">symbol</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="n">symbols</span><span class="p">),</span> <span class="n">func</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="n">Historical_prices_table</span><span class="o">.</span><span class="n">date_time</span><span class="p">)</span> <span class="o">==</span> <span class="n">previous_working_date</span><span class="p">)</span>
+                    <span class="o">.</span><span class="n">scalar</span><span class="p">()</span>
+                <span class="p">)</span>
+                
+                <span class="n">oneweek_back_marketcap</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Historical_prices_table</span><span class="o">.</span><span class="n">market_cap</span><span class="p">))</span>
+                    <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Historical_prices_table</span><span class="o">.</span><span class="n">symbol</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="n">symbols</span><span class="p">),</span> <span class="n">func</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="n">Historical_prices_table</span><span class="o">.</span><span class="n">date_time</span><span class="p">)</span> <span class="o">==</span> <span class="n">oneweek_back_working_date</span><span class="p">)</span>
+                    <span class="o">.</span><span class="n">scalar</span><span class="p">()</span>
+                <span class="p">)</span>
+
+                <span class="n">onemonth_back_marketcap</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Historical_prices_table</span><span class="o">.</span><span class="n">market_cap</span><span class="p">))</span>
+                    <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Historical_prices_table</span><span class="o">.</span><span class="n">symbol</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="n">symbols</span><span class="p">),</span> <span class="n">func</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="n">Historical_prices_table</span><span class="o">.</span><span class="n">date_time</span><span class="p">)</span> <span class="o">==</span> <span class="n">one_month_back_working_date</span><span class="p">)</span>
+                    <span class="o">.</span><span class="n">scalar</span><span class="p">()</span>
+                <span class="p">)</span>
+
+                <span class="n">threemonth_back_marketcap</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Historical_prices_table</span><span class="o">.</span><span class="n">market_cap</span><span class="p">))</span>
+                    <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Historical_prices_table</span><span class="o">.</span><span class="n">symbol</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="n">symbols</span><span class="p">),</span> <span class="n">func</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="n">Historical_prices_table</span><span class="o">.</span><span class="n">date_time</span><span class="p">)</span> <span class="o">==</span> <span class="n">three_months_back_working_date</span><span class="p">)</span>
+                    <span class="o">.</span><span class="n">scalar</span><span class="p">()</span>
+                <span class="p">)</span>
+
+                <span class="n">sixmonth_back_marketcap</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Historical_prices_table</span><span class="o">.</span><span class="n">market_cap</span><span class="p">))</span>
+                    <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Historical_prices_table</span><span class="o">.</span><span class="n">symbol</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="n">symbols</span><span class="p">),</span> <span class="n">func</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="n">Historical_prices_table</span><span class="o">.</span><span class="n">date_time</span><span class="p">)</span> <span class="o">==</span> <span class="n">six_months_back_working_date</span><span class="p">)</span>
+                    <span class="o">.</span><span class="n">scalar</span><span class="p">()</span>
+                <span class="p">)</span>
+
+                <span class="n">oneyear_back_marketcap</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Historical_prices_table</span><span class="o">.</span><span class="n">market_cap</span><span class="p">))</span>
+                    <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Historical_prices_table</span><span class="o">.</span><span class="n">symbol</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="n">symbols</span><span class="p">),</span> <span class="n">func</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="n">Historical_prices_table</span><span class="o">.</span><span class="n">date_time</span><span class="p">)</span> <span class="o">==</span> <span class="n">one_year_back_working_date</span><span class="p">)</span>
+                    <span class="o">.</span><span class="n">scalar</span><span class="p">()</span>
+                <span class="p">)</span>
+
+                <span class="c1"># Format the current market cap for the current sector</span>
+                <span class="n">formatted_current_market_cap</span> <span class="o">=</span> <span class="n">current_marketcap</span>
+
+                <span class="c1"># Format the previous market cap for the current sector</span>
+                <span class="n">formatted_previous_market_cap</span> <span class="o">=</span> <span class="n">previous_marketcap</span>
+
+                <span class="c1"># Format the one week back market cap for the current sector</span>
+                <span class="n">formatted_oneweek_back_market_cap</span> <span class="o">=</span> <span class="n">oneweek_back_marketcap</span>
+
+                <span class="c1"># Format the one month back market cap for the current sector</span>
+                <span class="n">formatted_onemonth_back_market_cap</span> <span class="o">=</span> <span class="n">onemonth_back_marketcap</span>
+
+                <span class="c1"># Format the three month back market cap for the current sector</span>
+                <span class="n">formatted_threemonth_back_market_cap</span> <span class="o">=</span> <span class="n">threemonth_back_marketcap</span>
+
+                <span class="c1"># Format the six month back market cap for the current sector</span>
+                <span class="n">formatted_sixmonth_back_market_cap</span> <span class="o">=</span> <span class="n">sixmonth_back_marketcap</span>
+
+                <span class="c1"># Format the one year back market cap for the current sector</span>
+                <span class="n">formatted_oneyear_back_market_cap</span> <span class="o">=</span> <span class="n">oneyear_back_marketcap</span>
+
+
+                <span class="n">sector_periodic_marketcap_data</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">sector</span><span class="p">,</span> <span class="n">formatted_current_market_cap</span><span class="p">,</span> <span class="n">formatted_previous_market_cap</span><span class="p">,</span> <span class="n">formatted_oneweek_back_market_cap</span><span class="p">,</span> <span class="n">formatted_onemonth_back_market_cap</span><span class="p">,</span> <span class="n">formatted_threemonth_back_market_cap</span><span class="p">,</span> <span class="n">formatted_sixmonth_back_market_cap</span><span class="p">,</span> <span class="n">formatted_oneyear_back_market_cap</span><span class="p">))</span>
+
+                
+                <span class="c1"># Store the market cap for the sector in the dictionary</span>
+                <span class="c1">#periodic_marketcap_for_sectors[sector] = formatted_market_cap</span>
+
+            <span class="n">periodic_marketcap_for_sectors</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;sector&quot;</span><span class="p">:</span> <span class="n">sector</span><span class="p">,</span> <span class="s2">&quot;current_marketcap&quot;</span><span class="p">:</span> <span class="n">formatted_current_market_cap</span><span class="p">,</span> <span class="s2">&quot;previous_marketcap&quot;</span><span class="p">:</span> <span class="n">formatted_previous_market_cap</span><span class="p">,</span> <span class="s2">&quot;oneweek_back&quot;</span><span class="p">:</span> <span class="n">formatted_oneweek_back_market_cap</span><span class="p">,</span> <span class="s2">&quot;onemonth_back&quot;</span><span class="p">:</span> <span class="n">formatted_onemonth_back_market_cap</span><span class="p">,</span> <span class="s2">&quot;threemonths_back&quot;</span><span class="p">:</span> <span class="n">formatted_threemonth_back_market_cap</span><span class="p">,</span> <span class="s2">&quot;sixmonths_back&quot;</span><span class="p">:</span> <span class="n">formatted_sixmonth_back_market_cap</span><span class="p">,</span> <span class="s2">&quot;oneyear_back&quot;</span><span class="p">:</span> <span class="n">formatted_oneyear_back_market_cap</span><span class="p">}</span> <span class="k">for</span> <span class="n">sector</span><span class="p">,</span> <span class="n">formatted_current_market_cap</span><span class="p">,</span> <span class="n">formatted_previous_market_cap</span><span class="p">,</span> <span class="n">formatted_oneweek_back_market_cap</span><span class="p">,</span> <span class="n">formatted_onemonth_back_market_cap</span><span class="p">,</span> <span class="n">formatted_threemonth_back_market_cap</span><span class="p">,</span> <span class="n">formatted_sixmonth_back_market_cap</span><span class="p">,</span> <span class="n">formatted_oneyear_back_market_cap</span> <span class="ow">in</span> <span class="n">sector_periodic_marketcap_data</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">periodic_marketcap_for_sectors</span></div>
+</div>
+
+    
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Kenrasoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

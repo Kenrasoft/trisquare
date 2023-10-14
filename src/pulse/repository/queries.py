@@ -1,3 +1,9 @@
+"""
+The purpose of this queries.py file is to generate some queries which might be frequently used across the application.
+
+This module imports SP500_table, Daily_prices_table and DatabaseConnect. 
+"""
+
 from pulse.repository.database_connect import DatabaseConnect
 from pulse.repository.index_companies_repo import SP500_table
 from pulse.repository.stock_prices_repo import Daily_prices_table
@@ -5,9 +11,21 @@ from pulse.repository.stock_prices_repo import Historical_prices_table
 from sqlalchemy import func
 from datetime import date, timedelta
 from dateutil.relativedelta import relativedelta
+
 # This class has all the different queries of different tables that can be used.
+
 class Queries:
+    """
+    This class has methods to generate queries like getting sectors and sub sectors informations along with the market cap.
+    """
+
     def get_sectors(self):
+        """
+        Queries the SP500 table to get the list of all the distinct sectors.
+
+        :return: All the names of sectors as a list.
+        """
+
         db_connector = DatabaseConnect()
         session = db_connector.connect_db()
         with session() as session:
@@ -18,6 +36,16 @@ class Queries:
             return data
         
     def get_sectors_subsectors(self, selected_sector=None):
+        """
+        Queries the SP500 table to get the list of all the distinct sectors and sub sectors.
+
+        If you just wish to get the data of all the sub sectors under a particular sector, you could pass that sector name as the argument.
+
+        :param selected_sector:  specific sector name
+
+        :return: All the names of sectors, subsectors as a list.
+        """
+
         db_connector = DatabaseConnect()
         session = db_connector.connect_db()
         with session() as session:
@@ -32,6 +60,12 @@ class Queries:
         return data
         
     def get_symbols(self):
+        """
+        To list down the symbols of all the sp500 companies. 
+
+        :return: All the symbols as a list.
+        """
+
         db_connector = DatabaseConnect()
         session = db_connector.connect_db()
         with session() as session:
@@ -40,6 +74,14 @@ class Queries:
             return symbols
         
     def get_sector_marketcap(self, selected_sector=None):
+        """
+        Calculate the total market cap for sp500 companies in the selected sector. 
+
+        :param selected_sector: specific sector name
+
+        :return: Market cap for the specific sector as a dictionary.
+        """
+
         db_connector = DatabaseConnect()
         session = db_connector.connect_db()
         with session() as session:
@@ -60,6 +102,12 @@ class Queries:
 
 
     def get_all_sectors_marketcap(self):
+        """
+        Calculate the total market cap for sp500 companies for all the sectors. 
+
+        :return: Market cap for the all the sectors as a dictionary.
+        """
+
         db_connector = DatabaseConnect()
         session = db_connector.connect_db()
         
@@ -91,6 +139,14 @@ class Queries:
         return sector_marketcaps
     
     def get_previous_working_date(previous_date):
+        """
+        This method is to Calculate the previous date by subtracting one day from the current date. 
+
+        :param previous_date: The date for which you want to calculate the previous working date.
+
+        :return: The previous working day based on the argument passed.
+        """
+
         date = previous_date
         if date.weekday() == 5:  # Saturday
             previous_working_day = date - timedelta(days=1)
@@ -102,6 +158,14 @@ class Queries:
         return previous_working_day
     
     def get_periodic_marketcap_for_sectors(self):
+        """
+        Function to get marketcap data over different time periods - 1 day, 1 week, 1 months, 3 months, 6 months, 1 year.
+
+        we use the return value of get_previous_working_date() method in this.
+
+        :return: The periodic market cap for sectors.
+        """
+
         db_connector = DatabaseConnect()
         session = db_connector.connect_db()
 
@@ -220,3 +284,4 @@ class Queries:
             periodic_marketcap_for_sectors = [{"sector": sector, "current_marketcap": formatted_current_market_cap, "previous_marketcap": formatted_previous_market_cap, "oneweek_back": formatted_oneweek_back_market_cap, "onemonth_back": formatted_onemonth_back_market_cap, "threemonths_back": formatted_threemonth_back_market_cap, "sixmonths_back": formatted_sixmonth_back_market_cap, "oneyear_back": formatted_oneyear_back_market_cap} for sector, formatted_current_market_cap, formatted_previous_market_cap, formatted_oneweek_back_market_cap, formatted_onemonth_back_market_cap, formatted_threemonth_back_market_cap, formatted_sixmonth_back_market_cap, formatted_oneyear_back_market_cap in sector_periodic_marketcap_data]
 
         return periodic_marketcap_for_sectors
+    

@@ -1,3 +1,9 @@
+"""
+The purpose of this index_companies_repo.py file is to create base classes for the index companies.
+
+This module imports PulseDB_Base class from pulse.repository.pulsedb_base.py
+"""
+
 from sqlalchemy.orm import declarative_base
 from sqlalchemy import Column, String, DateTime
 from pulse.repository.pulsedb_base import PulseDB_Base
@@ -6,8 +12,15 @@ Base = declarative_base()
 
 
 class SP500_table(Base, PulseDB_Base):
-# Entity class for the DB table SP500 companies. 
-# Manage all the operations like loading the data from the SP500 table.
+    """
+    Entity class for the DB table SP500.
+    
+    Helps in loading the data into SP500 table by creating instances (objects for the class).
+    
+    :param Base: with the help of SQL Alchemy's ORM features, we generate the Base class object using the declarative_base() fucntion which is helpful to define the columns and for creating instances.  
+    :param PulseDB_Base: we are passing the PulseDB_Base class object as a parameter for this class to override the convert() method.
+    """
+
     __tablename__ = 'sp500'
     symbol = Column(String, primary_key=True)
     company_name = Column(String)
@@ -23,6 +36,14 @@ class SP500_table(Base, PulseDB_Base):
         return Base
 
     def convert(self, element):
+        """
+        Takes each key-value pair in the json data returned from the API and initializes an instance of the class SP500_table.
+        
+        :param element: One element in the JSON data.
+
+        :return: row, which is the object of SP500_table class to the load_data() function in pulsedb_base.py which then adds this row into the data base table.
+        """
+
         row = SP500_table(
                 symbol=element["symbol"],
                 company_name=element["name"],
@@ -37,8 +58,14 @@ class SP500_table(Base, PulseDB_Base):
 
 
 class NASDAQ_table(Base,PulseDB_Base):
-# Entity class for the DB table NASDAQ companies. 
-# Manage all the operations like loading the data from the NASDAQ table.
+    """
+    Entity class for the DB table nasdaq.
+    
+    Helps in loading the data into nasdaq table by creating instances (objects for the class).
+    
+    :param Base: with the help of SQL Alchemy's ORM features, we generate the Base class object using the declarative_base() fucntion which is helpful to define the columns and for creating instances.
+    :param PulseDB_Base: we are passing the PulseDB_Base class object as a parameter for this class to override the convert() method.
+    """
 
     __tablename__ = 'nasdaq'
     symbol = Column(String, primary_key=True)
@@ -53,6 +80,14 @@ class NASDAQ_table(Base,PulseDB_Base):
         return Base
     
     def convert(self, element):
+        """
+        Takes each key-value pair in the json data returned from the API and initializes an instance of the class NASDAQ_table.
+        
+        :param element: One element in the JSON data.
+
+        :return: row, which is the object of NASDAQ_table class to the load_data() function in pulsedb_base.py which then adds this row into the data base table.
+        """
+
         row = NASDAQ_table(
             symbol=element["symbol"],
             company_name=element["name"],
@@ -65,8 +100,14 @@ class NASDAQ_table(Base,PulseDB_Base):
         return row
 
 class DOWJONES_table(Base, PulseDB_Base):
-# Entity class for the DB table DOWJONES companies. 
-# Manage all the operations like loading the data from the DOWJONES table.
+    """
+    Entity class for the DB table dowjones.
+     
+    Helps in loading the data into dowjones table by creating instances (objects for the class).
+    
+    :param Base: with the help of SQL Alchemy's ORM features, we generate the Base class object using the declarative_base() fucntion which is helpful to define the columns and for creating instances.  
+    :param PulseDB_Base: we are passing the PulseDB_Base class object as a parameter for this class to override the convert() method.
+    """
 
     __tablename__ = 'dowjones'
     symbol = Column(String, primary_key=True)
@@ -82,6 +123,14 @@ class DOWJONES_table(Base, PulseDB_Base):
         return Base
 
     def convert(self, element):
+        """
+        Takes key value pair in the json data returned from the API and initializes an instance of the class DOWJONES_table.
+        
+        :param element: One element in the JSON data.
+        
+        :return: row, which is the object of DOWJONES_table class to the load_data() function in pulsedb_base.py which then adds this row into the data base table.
+        """
+        
         row = DOWJONES_table(
             symbol=element["symbol"],
             company_name=element["name"],

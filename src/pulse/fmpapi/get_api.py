@@ -1,18 +1,26 @@
-from core.configuration.config_singleton import config_singleton
+"""
+The purpose of this get_api.py file is to define the base class to access all the API's. The base class builds the URL and fetches the data from the API.
+
+This module imports the config file (which stores details to access the API) from core.configuration.config.
+"""
+
+from core.configuration.config_singleton import config_singleton_a
 import requests
 import datetime
 import time
 
-
 class GetApi:
-    # Access Financial Modeling Prep APIs
-    # It constructs the query string depending on the API and fetches the data
-    # The data will be retured from the API is in the JSON format
-    # The class is the base class for all the APIs. It does all the functionality of building the URL
-    # and fetches the data.
-    # All the sub classes just needs to provide the query string depending on the API.
+    """
+    GetApi is the base class to access Financial Modeling Prep APIs.
 
-    config = config_singleton()
+    It constructs the query string depending on the API, does all the 
+    functionality of building the URL and fetches the data from the API.
+
+    All the sub classes (from index_companies_api.py or stock_prices_api.py in the current fmpapi module) just needs to provide the query string depending on the API.
+    
+    Attributes:
+        query_string (str): The name of the string required to fetch specific data. For example, sp500_constituent? is the query string required to access data related to sp500 companies.    
+    """
 
     # As per our subscription, we can make only 300 calls per minute. So if we exceed 300, then API doesn't respond. 
     # It's causing an error especially loading historical data for all the stocks. 
@@ -30,30 +38,79 @@ class GetApi:
     timer_start_time = datetime.datetime.now()
 
     def __init__(self, query_string) -> None:
-        self.api_config = GetApi.config.load_config()["FmpApi"]
+        config = config_singleton_a()
+        self.api_config = config.load_config()["FmpApi"]
         self.api_response = None
         self.query_string = query_string
 
     def get_uri(self):
+        """
+        Function to get the URI value mentioned in the configurations file.
+        
+        Returns:
+            string: URI.
+        """
+
         return self.api_config["uri"]
 
     def get_api_key(self):
+        """
+        Function to get the api_key value mentioned in the configurations file.
+        
+        Returns:
+            string: api_key.
+        """
+
         return self.api_config["key"]
 
     def get_url(self):
+        """
+        Function to generate the URL using URI, query_string and api_key.
+        
+        Returns:
+            string: URL.
+        """
+
         return self.get_uri() + self.query_string + self.get_api_key()
 
     def api_call(self):
+        """
+        Function to fetch the data from the API using URL and then covert the data into JSON format.
+        
+        Returns:
+            json dictionary: response, it's the json data fetched from the api.
+        """
+
         url = self.get_url()
         response = requests.get(url)
         jsondata = response.json()
         return jsondata
 
     def fetch(self):
+        """
+        Function to fetch the data in the json format from the api.
+
+        Returns:
+            You just call the throttle function in this and return the response.
+        """
+
         return self.throttle(self.api_call)
 
     # Throttling the calls across the app
     def throttle(self, api):
+        """
+        As per our subscription, we can make only 300 calls per minute. 
+        So if we exceed 300, then the API doesn't respond.
+
+        throttle function is used to handle this issue.
+
+        Args:
+            api (json dictionary): data returned from the api_call method.
+
+        Returns:
+            json dictionary: response, it's the json data fetched from the api itself - after handling the issue mentioned above.
+    
+        """
         
         if GetApi.completed_calls > GetApi.TOTAL_CALLS_PER_MINUTE and GetApi.timer < GetApi.MINUTE:
             

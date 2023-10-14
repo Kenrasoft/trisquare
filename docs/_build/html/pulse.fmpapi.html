@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pulse.fmpapi package &mdash; Trisquare  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="pulse.integration package" href="pulse.integration.html" />
+    <link rel="prev" title="pulse package" href="pulse.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Trisquare
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="some-feature.html">Documentation structure</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">src</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="app.html">app module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">core package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataloader.html">dataloader module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pangea.html">pangea package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="pulse.html">pulse package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="pulse.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">pulse.fmpapi package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pulse.integration.html">pulse.integration package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pulse.repository.html">pulse.repository package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pulse.html#module-pulse">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="test_functions.html">test_functions module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_pytest_cases.html">test_pytest_cases module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unittest_cases.html">unittest_cases module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Trisquare</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">src</a></li>
+          <li class="breadcrumb-item"><a href="pulse.html">pulse package</a></li>
+      <li class="breadcrumb-item active">pulse.fmpapi package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/pulse.fmpapi.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pulse-fmpapi-package">
+<h1>pulse.fmpapi package<a class="headerlink" href="#pulse-fmpapi-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-pulse.fmpapi.get_api">
+<span id="pulse-fmpapi-get-api-module"></span><h2>pulse.fmpapi.get_api module<a class="headerlink" href="#module-pulse.fmpapi.get_api" title="Link to this heading"></a></h2>
+<p>The purpose of this get_api.py file is to define the base class to access all the API’s. The base class builds the URL and fetches the data from the API.</p>
+<p>This module imports the config file (which stores details to access the API) from core.configuration.config.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pulse.fmpapi.get_api.GetApi">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pulse.fmpapi.get_api.</span></span><span class="sig-name descname"><span class="pre">GetApi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query_string</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/fmpapi/get_api.html#GetApi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.fmpapi.get_api.GetApi" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>GetApi is the base class to access Financial Modeling Prep APIs.</p>
+<p>It constructs the query string depending on the API, does all the
+functionality of building the URL and fetches the data from the API.</p>
+<p>All the sub classes (from index_companies_api.py or stock_prices_api.py in the current fmpapi module) just needs to provide the query string depending on the API.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pulse.fmpapi.get_api.GetApi.query_string">
+<span class="sig-name descname"><span class="pre">query_string</span></span><a class="headerlink" href="#pulse.fmpapi.get_api.GetApi.query_string" title="Link to this definition"></a></dt>
+<dd><p>The name of the string required to fetch specific data. For example, sp500_constituent? is the query string required to access data related to sp500 companies.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pulse.fmpapi.get_api.GetApi.api_call">
+<span class="sig-name descname"><span class="pre">api_call</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/fmpapi/get_api.html#GetApi.api_call"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.fmpapi.get_api.GetApi.api_call" title="Link to this definition"></a></dt>
+<dd><p>Function to fetch the data from the API using URL and then covert the data into JSON format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>response, it’s the json data fetched from the api.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>json dictionary</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pulse.fmpapi.get_api.GetApi.fetch">
+<span class="sig-name descname"><span class="pre">fetch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/fmpapi/get_api.html#GetApi.fetch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.fmpapi.get_api.GetApi.fetch" title="Link to this definition"></a></dt>
+<dd><p>Function to fetch the data in the json format from the api.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>You just call the throttle function in this and return the response.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pulse.fmpapi.get_api.GetApi.get_api_key">
+<span class="sig-name descname"><span class="pre">get_api_key</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/fmpapi/get_api.html#GetApi.get_api_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.fmpapi.get_api.GetApi.get_api_key" title="Link to this definition"></a></dt>
+<dd><p>Function to get the api_key value mentioned in the configurations file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>api_key.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>string</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pulse.fmpapi.get_api.GetApi.get_uri">
+<span class="sig-name descname"><span class="pre">get_uri</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/fmpapi/get_api.html#GetApi.get_uri"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.fmpapi.get_api.GetApi.get_uri" title="Link to this definition"></a></dt>
+<dd><p>Function to get the URI value mentioned in the configurations file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>URI.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>string</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pulse.fmpapi.get_api.GetApi.get_url">
+<span class="sig-name descname"><span class="pre">get_url</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/fmpapi/get_api.html#GetApi.get_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.fmpapi.get_api.GetApi.get_url" title="Link to this definition"></a></dt>
+<dd><p>Function to generate the URL using URI, query_string and api_key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>URL.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>string</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pulse.fmpapi.get_api.GetApi.throttle">
+<span class="sig-name descname"><span class="pre">throttle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/fmpapi/get_api.html#GetApi.throttle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.fmpapi.get_api.GetApi.throttle" title="Link to this definition"></a></dt>
+<dd><p>As per our subscription, we can make only 300 calls per minute.
+So if we exceed 300, then the API doesn’t respond.</p>
+<p>throttle function is used to handle this issue.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>api</strong> (<em>json dictionary</em>) – data returned from the api_call method.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>response, it’s the json data fetched from the api itself - after handling the issue mentioned above.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>json dictionary</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-pulse.fmpapi.index_companies_api">
+<span id="pulse-fmpapi-index-companies-api-module"></span><h2>pulse.fmpapi.index_companies_api module<a class="headerlink" href="#module-pulse.fmpapi.index_companies_api" title="Link to this heading"></a></h2>
+<p>The purpose of this index_companies_api.py file is to provide the query_strings of the index companies - sp500, Nasdaq and Dowjones to the GetApi class in the get_api.py module.</p>
+<p>This module imports the GetApi class from pulse.fmpapi.get_api</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pulse.fmpapi.index_companies_api.Dowjones">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pulse.fmpapi.index_companies_api.</span></span><span class="sig-name descname"><span class="pre">Dowjones</span></span><a class="reference internal" href="_modules/pulse/fmpapi/index_companies_api.html#Dowjones"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.fmpapi.index_companies_api.Dowjones" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pulse.fmpapi.get_api.GetApi" title="pulse.fmpapi.get_api.GetApi"><code class="xref py py-class docutils literal notranslate"><span class="pre">GetApi</span></code></a></p>
+<p>This class just needs to fill in the details of the query string for Dowjones. The Base class
+takes care of all the execution of the rest of the functionality.</p>
+<p>we are passing the GetApi class object as a parameter for this class.</p>
+<p>constructor is defined by using the __init__() fucntion to pass the query_string “dowjones_constituent?”.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pulse.fmpapi.index_companies_api.Nasdaq">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pulse.fmpapi.index_companies_api.</span></span><span class="sig-name descname"><span class="pre">Nasdaq</span></span><a class="reference internal" href="_modules/pulse/fmpapi/index_companies_api.html#Nasdaq"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.fmpapi.index_companies_api.Nasdaq" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pulse.fmpapi.get_api.GetApi" title="pulse.fmpapi.get_api.GetApi"><code class="xref py py-class docutils literal notranslate"><span class="pre">GetApi</span></code></a></p>
+<p>This class just needs to fill in the details of the query string for Nasdaq. The Base class
+takes care of all the execution of the rest of the functionality.</p>
+<p>we are passing the GetApi class object as a parameter for this class.</p>
+<p>constructor is defined by using the __init__() fucntion to pass the query_string “nasdaq_constituent?”.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pulse.fmpapi.index_companies_api.SP500">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pulse.fmpapi.index_companies_api.</span></span><span class="sig-name descname"><span class="pre">SP500</span></span><a class="reference internal" href="_modules/pulse/fmpapi/index_companies_api.html#SP500"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.fmpapi.index_companies_api.SP500" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pulse.fmpapi.get_api.GetApi" title="pulse.fmpapi.get_api.GetApi"><code class="xref py py-class docutils literal notranslate"><span class="pre">GetApi</span></code></a></p>
+<p>This class just needs to fill in the details of the query string for SP500. The Base class
+takes care of all the execution of the rest of the functionality.</p>
+<p>we are passing the GetApi class object as a parameter for this class.</p>
+<p>constructor is defined by using the __init__() fucntion to pass the query_string “sp500_constituent?”.</p>
+</dd></dl>
+
+</section>
+<section id="module-pulse.fmpapi.stock_prices_api">
+<span id="pulse-fmpapi-stock-prices-api-module"></span><h2>pulse.fmpapi.stock_prices_api module<a class="headerlink" href="#module-pulse.fmpapi.stock_prices_api" title="Link to this heading"></a></h2>
+<p>The purpose of this stock_prices_api.py file is to provide the query_strings of the Global stocks, historical data and daily prices to the GetApi class in the get_api.py module.</p>
+<p>This module imports the GetApi class from pulse.fmpapi.get_api</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pulse.fmpapi.stock_prices_api.Daily_prices">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pulse.fmpapi.stock_prices_api.</span></span><span class="sig-name descname"><span class="pre">Daily_prices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/fmpapi/stock_prices_api.html#Daily_prices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.fmpapi.stock_prices_api.Daily_prices" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pulse.fmpapi.get_api.GetApi" title="pulse.fmpapi.get_api.GetApi"><code class="xref py py-class docutils literal notranslate"><span class="pre">GetApi</span></code></a></p>
+<p>This class just needs to fill in the details of the query string for Daily prices. The Base class
+takes care of all the execution of the rest of the functionality.</p>
+<p>we are passing the GetApi class object as a parameter for this class.</p>
+<p>constructor is defined by using the __init__() fucntion to pass the query_string.</p>
+<p>Here, query_string contains the string ‘quote?’ along with the symbol of the company (check the API documentation and source code for more details).</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pulse.fmpapi.stock_prices_api.Global_stocks">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pulse.fmpapi.stock_prices_api.</span></span><span class="sig-name descname"><span class="pre">Global_stocks</span></span><a class="reference internal" href="_modules/pulse/fmpapi/stock_prices_api.html#Global_stocks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.fmpapi.stock_prices_api.Global_stocks" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pulse.fmpapi.get_api.GetApi" title="pulse.fmpapi.get_api.GetApi"><code class="xref py py-class docutils literal notranslate"><span class="pre">GetApi</span></code></a></p>
+<p>This class just needs to fill in the details of the query string for global stocks. The Base class
+takes care of all the execution of the rest of the functionality.</p>
+<p>we are passing the GetApi class object as a parameter for this class.</p>
+<p>constructor is defined by using the __init__() fucntion to pass the query_string “stock/list?”.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pulse.fmpapi.stock_prices_api.Historical_market_cap">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pulse.fmpapi.stock_prices_api.</span></span><span class="sig-name descname"><span class="pre">Historical_market_cap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/fmpapi/stock_prices_api.html#Historical_market_cap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.fmpapi.stock_prices_api.Historical_market_cap" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pulse.fmpapi.get_api.GetApi" title="pulse.fmpapi.get_api.GetApi"><code class="xref py py-class docutils literal notranslate"><span class="pre">GetApi</span></code></a></p>
+<p>This class just needs to fill in the details of the query string for Historical market cap data. The Base class
+takes care of all the execution of the rest of the functionality.</p>
+<p>we are passing the GetApi class object as a parameter for this class.</p>
+<p>constructor is defined by using the __init__() fucntion to pass the query_string.</p>
+<p>Here, query_string contains the symbol of the company and the limit parameter (check the API documentation and source code for more details).</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pulse.fmpapi.stock_prices_api.Historical_prices">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pulse.fmpapi.stock_prices_api.</span></span><span class="sig-name descname"><span class="pre">Historical_prices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/fmpapi/stock_prices_api.html#Historical_prices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.fmpapi.stock_prices_api.Historical_prices" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pulse.fmpapi.get_api.GetApi" title="pulse.fmpapi.get_api.GetApi"><code class="xref py py-class docutils literal notranslate"><span class="pre">GetApi</span></code></a></p>
+<p>This class just needs to fill in the details of the query string for Historical prices between certain dates. The Base class
+takes care of all the execution of the rest of the functionality.</p>
+<p>we are passing the GetApi class object as a parameter for this class.</p>
+<p>constructor is defined by using the __init__() fucntion to pass the query_string.</p>
+<p>Here, query_string contains the symbol of the company, from and to dates (check the API documentation and source code for more details).</p>
+</dd></dl>
+
+</section>
+<section id="module-pulse.fmpapi">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pulse.fmpapi" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pulse.html" class="btn btn-neutral float-left" title="pulse package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pulse.integration.html" class="btn btn-neutral float-right" title="pulse.integration package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Kenrasoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

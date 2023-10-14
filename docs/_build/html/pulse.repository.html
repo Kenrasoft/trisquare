@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pulse.repository package &mdash; Trisquare  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="test_functions module" href="test_functions.html" />
+    <link rel="prev" title="pulse.integration package" href="pulse.integration.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Trisquare
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="some-feature.html">Documentation structure</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">src</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="app.html">app module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">core package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataloader.html">dataloader module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pangea.html">pangea package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="pulse.html">pulse package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="pulse.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="pulse.fmpapi.html">pulse.fmpapi package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pulse.integration.html">pulse.integration package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">pulse.repository package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pulse.html#module-pulse">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="test_functions.html">test_functions module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test_pytest_cases.html">test_pytest_cases module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unittest_cases.html">unittest_cases module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Trisquare</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">src</a></li>
+          <li class="breadcrumb-item"><a href="pulse.html">pulse package</a></li>
+      <li class="breadcrumb-item active">pulse.repository package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/pulse.repository.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pulse-repository-package">
+<h1>pulse.repository package<a class="headerlink" href="#pulse-repository-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-pulse.repository.database_connect">
+<span id="pulse-repository-database-connect-module"></span><h2>pulse.repository.database_connect module<a class="headerlink" href="#module-pulse.repository.database_connect" title="Link to this heading"></a></h2>
+<p>The purpose of this database_connect.py file is to instantiate database connections and sessions.</p>
+<p>This module imports the config file (which stores details to access the data base) from core.configuration.config.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pulse.repository.database_connect.DatabaseConnect">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pulse.repository.database_connect.</span></span><span class="sig-name descname"><span class="pre">DatabaseConnect</span></span><a class="reference internal" href="_modules/pulse/repository/database_connect.html#DatabaseConnect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.repository.database_connect.DatabaseConnect" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The centralized class for the database connections and sessions.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pulse.repository.database_connect.DatabaseConnect.connect_db">
+<span class="sig-name descname"><span class="pre">connect_db</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/repository/database_connect.html#DatabaseConnect.connect_db"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.repository.database_connect.DatabaseConnect.connect_db" title="Link to this definition"></a></dt>
+<dd><p>Establishes the data base connection using the details - username, password, hostname, port number and the database name obtained from the config file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The database session created using create_engine() and sessionmaker().</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pulse.repository.database_connect.DatabaseConnect.create_engine">
+<span class="sig-name descname"><span class="pre">create_engine</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/repository/database_connect.html#DatabaseConnect.create_engine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.repository.database_connect.DatabaseConnect.create_engine" title="Link to this definition"></a></dt>
+<dd><p>Creates the database engine using - username, password, hostname, port number and the database name obtained from the config file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The database connection (engine) established using create_engine().</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-pulse.repository.index_companies_repo">
+<span id="pulse-repository-index-companies-repo-module"></span><h2>pulse.repository.index_companies_repo module<a class="headerlink" href="#module-pulse.repository.index_companies_repo" title="Link to this heading"></a></h2>
+<p>The purpose of this index_companies_repo.py file is to create base classes for the index companies.</p>
+<p>This module imports PulseDB_Base class from pulse.repository.pulsedb_base.py</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pulse.repository.index_companies_repo.DOWJONES_table">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pulse.repository.index_companies_repo.</span></span><span class="sig-name descname"><span class="pre">DOWJONES_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/repository/index_companies_repo.html#DOWJONES_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.repository.index_companies_repo.DOWJONES_table" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Base</span></code>, <a class="reference internal" href="#pulse.repository.pulsedb_base.PulseDB_Base" title="pulse.repository.pulsedb_base.PulseDB_Base"><code class="xref py py-class docutils literal notranslate"><span class="pre">PulseDB_Base</span></code></a></p>
+<p>Entity class for the DB table dowjones.</p>
+<p>Helps in loading the data into dowjones table by creating instances (objects for the class).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Base</strong> – with the help of SQL Alchemy’s ORM features, we generate the Base class object using the declarative_base() fucntion which is helpful to define the columns and for creating instances.</p></li>
+<li><p><strong>PulseDB_Base</strong> – we are passing the PulseDB_Base class object as a parameter for this class to override the convert() method.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pulse.repository.index_companies_repo.DOWJONES_table.convert">
+<span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/repository/index_companies_repo.html#DOWJONES_table.convert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.repository.index_companies_repo.DOWJONES_table.convert" title="Link to this definition"></a></dt>
+<dd><p>Takes key value pair in the json data returned from the API and initializes an instance of the class DOWJONES_table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>element</strong> – One element in the JSON data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>row, which is the object of DOWJONES_table class to the load_data() function in pulsedb_base.py which then adds this row into the data base table.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pulse.repository.index_companies_repo.NASDAQ_table">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pulse.repository.index_companies_repo.</span></span><span class="sig-name descname"><span class="pre">NASDAQ_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/repository/index_companies_repo.html#NASDAQ_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.repository.index_companies_repo.NASDAQ_table" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Base</span></code>, <a class="reference internal" href="#pulse.repository.pulsedb_base.PulseDB_Base" title="pulse.repository.pulsedb_base.PulseDB_Base"><code class="xref py py-class docutils literal notranslate"><span class="pre">PulseDB_Base</span></code></a></p>
+<p>Entity class for the DB table nasdaq.</p>
+<p>Helps in loading the data into nasdaq table by creating instances (objects for the class).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Base</strong> – with the help of SQL Alchemy’s ORM features, we generate the Base class object using the declarative_base() fucntion which is helpful to define the columns and for creating instances.</p></li>
+<li><p><strong>PulseDB_Base</strong> – we are passing the PulseDB_Base class object as a parameter for this class to override the convert() method.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pulse.repository.index_companies_repo.NASDAQ_table.convert">
+<span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/repository/index_companies_repo.html#NASDAQ_table.convert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.repository.index_companies_repo.NASDAQ_table.convert" title="Link to this definition"></a></dt>
+<dd><p>Takes each key-value pair in the json data returned from the API and initializes an instance of the class NASDAQ_table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>element</strong> – One element in the JSON data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>row, which is the object of NASDAQ_table class to the load_data() function in pulsedb_base.py which then adds this row into the data base table.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pulse.repository.index_companies_repo.SP500_table">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pulse.repository.index_companies_repo.</span></span><span class="sig-name descname"><span class="pre">SP500_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/repository/index_companies_repo.html#SP500_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.repository.index_companies_repo.SP500_table" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Base</span></code>, <a class="reference internal" href="#pulse.repository.pulsedb_base.PulseDB_Base" title="pulse.repository.pulsedb_base.PulseDB_Base"><code class="xref py py-class docutils literal notranslate"><span class="pre">PulseDB_Base</span></code></a></p>
+<p>Entity class for the DB table SP500.</p>
+<p>Helps in loading the data into SP500 table by creating instances (objects for the class).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Base</strong> – with the help of SQL Alchemy’s ORM features, we generate the Base class object using the declarative_base() fucntion which is helpful to define the columns and for creating instances.</p></li>
+<li><p><strong>PulseDB_Base</strong> – we are passing the PulseDB_Base class object as a parameter for this class to override the convert() method.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pulse.repository.index_companies_repo.SP500_table.base">
+<span class="sig-name descname"><span class="pre">base</span></span><a class="headerlink" href="#pulse.repository.index_companies_repo.SP500_table.base" title="Link to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">Base</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pulse.repository.index_companies_repo.SP500_table.convert">
+<span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/repository/index_companies_repo.html#SP500_table.convert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.repository.index_companies_repo.SP500_table.convert" title="Link to this definition"></a></dt>
+<dd><p>Takes each key-value pair in the json data returned from the API and initializes an instance of the class SP500_table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>element</strong> – One element in the JSON data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>row, which is the object of SP500_table class to the load_data() function in pulsedb_base.py which then adds this row into the data base table.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-pulse.repository.pulsedb_base">
+<span id="pulse-repository-pulsedb-base-module"></span><h2>pulse.repository.pulsedb_base module<a class="headerlink" href="#module-pulse.repository.pulsedb_base" title="Link to this heading"></a></h2>
+<p>The purpose of this pulsedb_base.py file is to load the data (row by row) into the data base tables.</p>
+<p>This module imports DatabaseConnect from pulse.repository.database_connect to access the database connection.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pulse.repository.pulsedb_base.PulseDB_Base">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pulse.repository.pulsedb_base.</span></span><span class="sig-name descname"><span class="pre">PulseDB_Base</span></span><a class="reference internal" href="_modules/pulse/repository/pulsedb_base.html#PulseDB_Base"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.repository.pulsedb_base.PulseDB_Base" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class is used to handle database connections, loading the JSON data from API, adding rows to tables.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pulse.repository.pulsedb_base.PulseDB_Base.convert">
+<span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/repository/pulsedb_base.html#PulseDB_Base.convert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.repository.pulsedb_base.PulseDB_Base.convert" title="Link to this definition"></a></dt>
+<dd><p>All the sub classes that inherits this PulseDB_Base Class can override this method convert() according to their specific requirements.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>element</strong> – One element in the JSON data.</p>
+</dd>
+</dl>
+<p>In the load_data() method below, we are calling this method convert().</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pulse.repository.pulsedb_base.PulseDB_Base.create_table">
+<span class="sig-name descname"><span class="pre">create_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/repository/pulsedb_base.html#PulseDB_Base.create_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.repository.pulsedb_base.PulseDB_Base.create_table" title="Link to this definition"></a></dt>
+<dd><p>This method is to create the table using SQL Alchemy’s way but we generally create tables using raw SQL queries so that we have better control of the underlying schema.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pulse.repository.pulsedb_base.PulseDB_Base.load_data">
+<span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/repository/pulsedb_base.html#PulseDB_Base.load_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.repository.pulsedb_base.PulseDB_Base.load_data" title="Link to this definition"></a></dt>
+<dd><p>In this function, you use the ‘with’ to open the database session and then for each element in the JSON data, you pass it to conert() method which gives back an object() which can be added as a row in the database table.</p>
+<p>we use error handling as well, If the row gets added succesfully - then, the transaction gets committed or else we rollback the transaction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> – data that is fetched from the API in the JSON format (dictionary).</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-pulse.repository.queries">
+<span id="pulse-repository-queries-module"></span><h2>pulse.repository.queries module<a class="headerlink" href="#module-pulse.repository.queries" title="Link to this heading"></a></h2>
+<p>The purpose of this queries.py file is to generate some queries which might be frequently used across the application.</p>
+<p>This module imports SP500_table, Daily_prices_table and DatabaseConnect.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pulse.repository.queries.Queries">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pulse.repository.queries.</span></span><span class="sig-name descname"><span class="pre">Queries</span></span><a class="reference internal" href="_modules/pulse/repository/queries.html#Queries"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.repository.queries.Queries" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class has methods to generate queries like getting sectors and sub sectors informations along with the market cap.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pulse.repository.queries.Queries.get_all_sectors_marketcap">
+<span class="sig-name descname"><span class="pre">get_all_sectors_marketcap</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/repository/queries.html#Queries.get_all_sectors_marketcap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.repository.queries.Queries.get_all_sectors_marketcap" title="Link to this definition"></a></dt>
+<dd><p>Calculate the total market cap for sp500 companies for all the sectors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Market cap for the all the sectors as a dictionary.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pulse.repository.queries.Queries.get_periodic_marketcap_for_sectors">
+<span class="sig-name descname"><span class="pre">get_periodic_marketcap_for_sectors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/repository/queries.html#Queries.get_periodic_marketcap_for_sectors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.repository.queries.Queries.get_periodic_marketcap_for_sectors" title="Link to this definition"></a></dt>
+<dd><p>Function to get marketcap data over different time periods - 1 day, 1 week, 1 months, 3 months, 6 months, 1 year.</p>
+<p>we use the return value of get_previous_working_date() method in this.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The periodic market cap for sectors.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pulse.repository.queries.Queries.get_previous_working_date">
+<span class="sig-name descname"><span class="pre">get_previous_working_date</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/repository/queries.html#Queries.get_previous_working_date"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.repository.queries.Queries.get_previous_working_date" title="Link to this definition"></a></dt>
+<dd><p>This method is to Calculate the previous date by subtracting one day from the current date.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>previous_date</strong> – The date for which you want to calculate the previous working date.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The previous working day based on the argument passed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pulse.repository.queries.Queries.get_sector_marketcap">
+<span class="sig-name descname"><span class="pre">get_sector_marketcap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">selected_sector</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/repository/queries.html#Queries.get_sector_marketcap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.repository.queries.Queries.get_sector_marketcap" title="Link to this definition"></a></dt>
+<dd><p>Calculate the total market cap for sp500 companies in the selected sector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>selected_sector</strong> – specific sector name</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Market cap for the specific sector as a dictionary.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pulse.repository.queries.Queries.get_sectors">
+<span class="sig-name descname"><span class="pre">get_sectors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/repository/queries.html#Queries.get_sectors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.repository.queries.Queries.get_sectors" title="Link to this definition"></a></dt>
+<dd><p>Queries the SP500 table to get the list of all the distinct sectors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>All the names of sectors as a list.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pulse.repository.queries.Queries.get_sectors_subsectors">
+<span class="sig-name descname"><span class="pre">get_sectors_subsectors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">selected_sector</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/repository/queries.html#Queries.get_sectors_subsectors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.repository.queries.Queries.get_sectors_subsectors" title="Link to this definition"></a></dt>
+<dd><p>Queries the SP500 table to get the list of all the distinct sectors and sub sectors.</p>
+<p>If you just wish to get the data of all the sub sectors under a particular sector, you could pass that sector name as the argument.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>selected_sector</strong> – specific sector name</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>All the names of sectors, subsectors as a list.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pulse.repository.queries.Queries.get_symbols">
+<span class="sig-name descname"><span class="pre">get_symbols</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/repository/queries.html#Queries.get_symbols"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.repository.queries.Queries.get_symbols" title="Link to this definition"></a></dt>
+<dd><p>To list down the symbols of all the sp500 companies.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>All the symbols as a list.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-pulse.repository.stock_prices_repo">
+<span id="pulse-repository-stock-prices-repo-module"></span><h2>pulse.repository.stock_prices_repo module<a class="headerlink" href="#module-pulse.repository.stock_prices_repo" title="Link to this heading"></a></h2>
+<p>The purpose of this stock_prices_repo.py file is to create base classes for the stocks, historic and daily prices data.</p>
+<p>This module imports PulseDB_Base class from pulse.repository.pulsedb_base.py</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pulse.repository.stock_prices_repo.Daily_prices_table">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pulse.repository.stock_prices_repo.</span></span><span class="sig-name descname"><span class="pre">Daily_prices_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/repository/stock_prices_repo.html#Daily_prices_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.repository.stock_prices_repo.Daily_prices_table" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Base</span></code>, <a class="reference internal" href="#pulse.repository.pulsedb_base.PulseDB_Base" title="pulse.repository.pulsedb_base.PulseDB_Base"><code class="xref py py-class docutils literal notranslate"><span class="pre">PulseDB_Base</span></code></a></p>
+<p>Entity class for the DB table daily_prices.</p>
+<p>Helps in loading the data into daily_prices table by creating instances (objects for the class).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Base</strong> – with the help of SQL Alchemy’s ORM features, we generate the Base class object using the declarative_base() fucntion which is helpful to define the columns and for creating instances.</p></li>
+<li><p><strong>PulseDB_Base</strong> – we are passing the PulseDB_Base class object as a parameter for this class to override the convert() method.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pulse.repository.stock_prices_repo.Daily_prices_table.convert">
+<span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/repository/stock_prices_repo.html#Daily_prices_table.convert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.repository.stock_prices_repo.Daily_prices_table.convert" title="Link to this definition"></a></dt>
+<dd><p>Takes each key-value pair in the json data returned from the API and initializes an instance of the class Daily_prices_table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>element</strong> – One element in the JSON data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>row, which is the object of Daily_prices_table class to the load_data() function in pulsedb_base.py which then adds this row into the data base table.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pulse.repository.stock_prices_repo.Global_stocks_table">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pulse.repository.stock_prices_repo.</span></span><span class="sig-name descname"><span class="pre">Global_stocks_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/repository/stock_prices_repo.html#Global_stocks_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.repository.stock_prices_repo.Global_stocks_table" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Base</span></code>, <a class="reference internal" href="#pulse.repository.pulsedb_base.PulseDB_Base" title="pulse.repository.pulsedb_base.PulseDB_Base"><code class="xref py py-class docutils literal notranslate"><span class="pre">PulseDB_Base</span></code></a></p>
+<p>Entity class for the DB table globalstocks.</p>
+<p>Helps in loading the data into globalstocks table by creating instances (objects for the class).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Base</strong> – with the help of SQL Alchemy’s ORM features, we generate the Base class object using the declarative_base() fucntion which is helpful to define the columns and for creating instances.</p></li>
+<li><p><strong>PulseDB_Base</strong> – we are passing the PulseDB_Base class object as a parameter for this class to override the convert() method.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pulse.repository.stock_prices_repo.Global_stocks_table.convert">
+<span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/repository/stock_prices_repo.html#Global_stocks_table.convert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.repository.stock_prices_repo.Global_stocks_table.convert" title="Link to this definition"></a></dt>
+<dd><p>Takes each key-value pair in the json data returned from the API and initializes an instance of the class Global_stocks_table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>element</strong> – One element in the JSON data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>row, which is the object of Global_stocks_table class to the load_data() function in pulsedb_base.py which then adds this row into the data base table.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pulse.repository.stock_prices_repo.Historical_prices_table">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pulse.repository.stock_prices_repo.</span></span><span class="sig-name descname"><span class="pre">Historical_prices_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/repository/stock_prices_repo.html#Historical_prices_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.repository.stock_prices_repo.Historical_prices_table" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Base</span></code>, <a class="reference internal" href="#pulse.repository.pulsedb_base.PulseDB_Base" title="pulse.repository.pulsedb_base.PulseDB_Base"><code class="xref py py-class docutils literal notranslate"><span class="pre">PulseDB_Base</span></code></a></p>
+<p>Entity class for the DB table historical_prices.</p>
+<p>Helps in loading the data into historical_prices table by creating instances (objects for the class).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Base</strong> – with the help of SQL Alchemy’s ORM features, we generate the Base class object using the declarative_base() fucntion which is helpful to define the columns and for creating instances.</p></li>
+<li><p><strong>PulseDB_Base</strong> – we are passing the PulseDB_Base class object as a parameter for this class to override the convert() method.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pulse.repository.stock_prices_repo.Historical_prices_table.convert">
+<span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pulse/repository/stock_prices_repo.html#Historical_prices_table.convert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pulse.repository.stock_prices_repo.Historical_prices_table.convert" title="Link to this definition"></a></dt>
+<dd><p>Takes each key-value pair in the json data returned from the API and initializes an instance of the class Historical_prices_table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>element</strong> – One element in the JSON data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>row, which is the object of Historical_prices_table class to the load_data() function in pulsedb_base.py which then adds this row into the data base table.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-pulse.repository">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pulse.repository" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pulse.integration.html" class="btn btn-neutral float-left" title="pulse.integration package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="test_functions.html" class="btn btn-neutral float-right" title="test_functions module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Kenrasoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

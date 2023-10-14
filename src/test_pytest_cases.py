@@ -1,5 +1,9 @@
-from test_functions import singleton
-from core.configuration.config_singleton import config_singleton
+"""
+The purpose of this module is to do testing using pytest for all the data under fmpapi module.
+"""
+
+from test_functions import test_config_singleton
+from core.configuration.config_singleton import config_singleton_a
 from pulse.fmpapi.index_companies_api import SP500
 from pulse.fmpapi.index_companies_api import Nasdaq
 from pulse.fmpapi.index_companies_api import Dowjones
@@ -13,14 +17,23 @@ import pandas as pd
 import datetime
 
 def test_config_single():
-    object1 = config_singleton()
+    """
+	create two instances of singleton class and comparing the instances to ensure that they refer to the same object.
+    """
+
+    object1 = config_singleton_a()
     object1.load_config()
-    object2 = config_singleton()
+    object2 = config_singleton_a()
     object2.load_config()
-    assert singleton(object1,object2) == True
+    assert test_config_singleton(object1,object2) == True
 
 
 def test_sp500_api():
+    """
+   	check if the api link is working through http status code. 
+    
+    Also counting for number of unique symbols in sp500 table after fetching the json data from the api link.
+    """
     
     response = requests.get("https://financialmodelingprep.com/api/v3/sp500_constituent?apikey=304459a7a227a31923b63192971bc245")
     # Check that the API response was successful
@@ -39,6 +52,11 @@ def test_sp500_api():
     assert unique_values_count >= expected_unique_values_count
 
 def test_nasdaq_api():
+    """
+    check if the api link is working through http status code. 
+
+    Also counting for number of unique symbols in nasdaq table after fetching the json data from the api link.
+    """
     
     response = requests.get("https://financialmodelingprep.com/api/v3/nasdaq_constituent?apikey=304459a7a227a31923b63192971bc245")
     # Check that the API response was successful
@@ -57,6 +75,11 @@ def test_nasdaq_api():
     assert unique_values_count >= expected_unique_values_count
 
 def test_dowjones_api():
+    """
+    check if the api link is working through http status code. 		
+    
+    Also counting for number of unique symbols in dowjones table after fetching the json data from the api link.
+    """
     
     response = requests.get("https://financialmodelingprep.com/api/v3/dowjones_constituent?apikey=304459a7a227a31923b63192971bc245")
     # Check that the API response was successful
@@ -75,6 +98,12 @@ def test_dowjones_api():
     assert unique_values_count >= expected_unique_values_count
 
 def test_historical_api():
+    """
+    checking if the api link is working through http status code. 
+
+    comparing if the current date is equal to the recent date in historical_api table, so that we know that the api link is providing the most recent data.
+    """
+
     current_date = datetime.date.today()
     date = current_date.strftime("%Y-%m-%d")
     
@@ -93,6 +122,12 @@ def test_historical_api():
 
 
 def test_dailyprices_api():
+    """
+    checking if the api link is working through http status code. 
+
+    comparing if the current date is equal to the recent date in dailyprices table, so that we know that the api link is providing the most recent data.
+    """
+    
     response = requests.get("https://financialmodelingprep.com/api/v3/quote/AAPL?apikey=304459a7a227a31923b63192971bc245")
     # Check that the API response was successful
     assert response.status_code == 200
@@ -113,6 +148,11 @@ def test_dailyprices_api():
     assert latest_date == current_date
 
 def test_historicmarketcap_api():
+    """
+    checking if the api link is working through http status code. 
+
+    comparing if the current date is equal to the recent date in historicmarketcap_api table, so that we know that the api link is providing the most recent data.
+    		"""
     response = requests.get("https://financialmodelingprep.com/api/v3/historical-market-capitalization/AAPL?limit=2000&apikey=304459a7a227a31923b63192971bc245")
     # Check that the API response was successful
     assert response.status_code == 200

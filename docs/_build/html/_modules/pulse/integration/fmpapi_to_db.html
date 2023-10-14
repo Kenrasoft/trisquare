@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pulse.integration.fmpapi_to_db &mdash; Trisquare  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Trisquare
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../some-feature.html">Documentation structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">src</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Trisquare</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">pulse.integration.fmpapi_to_db</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pulse.integration.fmpapi_to_db</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The purpose of this fmpapi_to_db.py file is to integrate the functionalities between the fmpapi (api related) and the repository (data base related) i.e., to serve as a connection between sending the data accessed using the API to the data base.</span>
+
+<span class="sd">This module imports all the required classes (look into source code link here) from both the fmpapi and repository folders.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">pulse.fmpapi.index_companies_api</span> <span class="kn">import</span> <span class="n">SP500</span>
+<span class="kn">from</span> <span class="nn">pulse.fmpapi.index_companies_api</span> <span class="kn">import</span> <span class="n">Nasdaq</span>
+<span class="kn">from</span> <span class="nn">pulse.fmpapi.index_companies_api</span> <span class="kn">import</span> <span class="n">Dowjones</span>
+<span class="kn">from</span> <span class="nn">pulse.fmpapi.stock_prices_api</span> <span class="kn">import</span> <span class="n">Global_stocks</span>
+
+<span class="kn">from</span> <span class="nn">pulse.fmpapi.stock_prices_api</span> <span class="kn">import</span> <span class="n">Historical_prices</span>
+<span class="kn">from</span> <span class="nn">pulse.fmpapi.stock_prices_api</span> <span class="kn">import</span> <span class="n">Historical_market_cap</span>
+<span class="kn">from</span> <span class="nn">pulse.fmpapi.stock_prices_api</span> <span class="kn">import</span> <span class="n">Daily_prices</span>
+
+
+<span class="kn">from</span> <span class="nn">pulse.repository.index_companies_repo</span> <span class="kn">import</span> <span class="n">SP500_table</span>
+<span class="kn">from</span> <span class="nn">pulse.repository.index_companies_repo</span> <span class="kn">import</span> <span class="n">NASDAQ_table</span>
+<span class="kn">from</span> <span class="nn">pulse.repository.index_companies_repo</span> <span class="kn">import</span> <span class="n">DOWJONES_table</span>
+<span class="kn">from</span> <span class="nn">pulse.repository.stock_prices_repo</span> <span class="kn">import</span> <span class="n">Global_stocks_table</span>
+<span class="kn">from</span> <span class="nn">pulse.repository.stock_prices_repo</span> <span class="kn">import</span> <span class="n">Historical_prices_table</span>
+<span class="kn">from</span> <span class="nn">pulse.repository.stock_prices_repo</span> <span class="kn">import</span> <span class="n">Daily_prices_table</span>
+<span class="kn">from</span> <span class="nn">pulse.repository.queries</span> <span class="kn">import</span> <span class="n">Queries</span>
+<span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ThreadPoolExecutor</span>
+
+
+<div class="viewcode-block" id="FmpApiToDatabase">
+<a class="viewcode-back" href="../../../pulse.integration.html#pulse.integration.fmpapi_to_db.FmpApiToDatabase">[docs]</a>
+<span class="k">class</span> <span class="nc">FmpApiToDatabase</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Integration layer to extract the FMPAPI data and load it into the database.</span>
+
+<span class="sd">    All the functions under this class load the data from the API using the fetch() function in get_api.py and load that data into respective tables using the load_data() function in the pulsedb_base.py.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="c1"># {classname}.create_table({class_repo}.getBase()) is used to create table for class. </span>
+<span class="c1"># Generally we run it when we dont have a table createdin pulse DB.</span>
+
+<div class="viewcode-block" id="FmpApiToDatabase.load_SP500_companies">
+<a class="viewcode-back" href="../../../pulse.integration.html#pulse.integration.fmpapi_to_db.FmpApiToDatabase.load_SP500_companies">[docs]</a>
+    <span class="k">def</span> <span class="nf">load_SP500_companies</span><span class="p">():</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function is to load the sp500 companies data into the data base (SP500_table).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">sp500_api</span> <span class="o">=</span> <span class="n">SP500</span><span class="p">()</span>
+        <span class="n">sp500_json_data</span> <span class="o">=</span> <span class="n">sp500_api</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fetched sp500 json data from API&quot;</span><span class="p">)</span>
+
+        <span class="n">sp500_repo</span> <span class="o">=</span> <span class="n">SP500_table</span><span class="p">()</span>
+        <span class="c1"># The below line which is commented is used to create table based on class</span>
+        <span class="c1"># sp500.create_table(sp500_repo.getBase())</span>
+        <span class="n">sp500_repo</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">sp500_json_data</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;loaded sp500 API data into sp500 table&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="FmpApiToDatabase.load_Nasdaq_companies">
+<a class="viewcode-back" href="../../../pulse.integration.html#pulse.integration.fmpapi_to_db.FmpApiToDatabase.load_Nasdaq_companies">[docs]</a>
+    <span class="k">def</span> <span class="nf">load_Nasdaq_companies</span><span class="p">():</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function is to load the Nasdaq companies data into the data base (NASDAQ_table).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">nasdaq_api</span> <span class="o">=</span> <span class="n">Nasdaq</span><span class="p">()</span>
+        <span class="n">nasdaq_json_data</span> <span class="o">=</span> <span class="n">nasdaq_api</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fetched Nasdaq json data from API&quot;</span><span class="p">)</span>
+
+        <span class="n">nasdaq_repo</span> <span class="o">=</span> <span class="n">NASDAQ_table</span><span class="p">()</span>
+        <span class="c1"># The below line which is commented is used to create table based on class</span>
+        <span class="c1"># nasdaq_repo.create_table(nasdaq_repo.getBase())</span>
+        <span class="n">nasdaq_repo</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">nasdaq_json_data</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;loaded Nasdaq API data into Nasdaq table&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="FmpApiToDatabase.load_Dowjones_companies">
+<a class="viewcode-back" href="../../../pulse.integration.html#pulse.integration.fmpapi_to_db.FmpApiToDatabase.load_Dowjones_companies">[docs]</a>
+    <span class="k">def</span> <span class="nf">load_Dowjones_companies</span><span class="p">():</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function is to load the Dowjones companies data into the data base (DOWJONES_table).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">dowjones_api</span> <span class="o">=</span> <span class="n">Dowjones</span><span class="p">()</span>
+        <span class="n">dowjones_json_data</span> <span class="o">=</span> <span class="n">dowjones_api</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fetched Dowjones json data from API&quot;</span><span class="p">)</span>
+
+        <span class="n">dowjones_repo</span> <span class="o">=</span> <span class="n">DOWJONES_table</span><span class="p">()</span>
+        <span class="c1"># The below line which is commented is used to create table based on class</span>
+        <span class="c1"># dowjones_repo.create_table(dowjones_repo.getBase())</span>
+        <span class="n">dowjones_repo</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">dowjones_json_data</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;loaded Dowjones API data into Dowjones table&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="FmpApiToDatabase.load_index_companies">
+<a class="viewcode-back" href="../../../pulse.integration.html#pulse.integration.fmpapi_to_db.FmpApiToDatabase.load_index_companies">[docs]</a>
+    <span class="k">def</span> <span class="nf">load_index_companies</span><span class="p">():</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method is used to load all the stocks of index companies.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">FmpApiToDatabase</span><span class="o">.</span><span class="n">load_SP500_companies</span><span class="p">()</span>
+        <span class="n">FmpApiToDatabase</span><span class="o">.</span><span class="n">load_Nasdaq_companies</span><span class="p">()</span>
+        <span class="n">FmpApiToDatabase</span><span class="o">.</span><span class="n">load_Dowjones_companies</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="FmpApiToDatabase.load_global_stocks">
+<a class="viewcode-back" href="../../../pulse.integration.html#pulse.integration.fmpapi_to_db.FmpApiToDatabase.load_global_stocks">[docs]</a>
+    <span class="k">def</span> <span class="nf">load_global_stocks</span><span class="p">():</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function is to load the gobal stocks data into the data base (Global_stocks_table).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">global_stocks_api</span> <span class="o">=</span> <span class="n">Global_stocks</span><span class="p">()</span>
+        <span class="n">global_stocks_json_data</span> <span class="o">=</span> <span class="n">global_stocks_api</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fetched global stocks json data from API&quot;</span><span class="p">)</span>
+
+        <span class="n">global_stocks_repo</span> <span class="o">=</span> <span class="n">Global_stocks_table</span><span class="p">()</span>
+        <span class="c1"># The below line which is commented is used to create table based on class</span>
+        <span class="c1"># globalstocks_repo.create_table(globalstocks_repo.getBase())</span>
+        <span class="n">global_stocks_repo</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">global_stocks_json_data</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;loaded Global stock API data into globalstocks table&quot;</span><span class="p">)</span></div>
+
+
+    
+<div class="viewcode-block" id="FmpApiToDatabase.load_historical_prices">
+<a class="viewcode-back" href="../../../pulse.integration.html#pulse.integration.fmpapi_to_db.FmpApiToDatabase.load_historical_prices">[docs]</a>
+    <span class="k">def</span> <span class="nf">load_historical_prices</span><span class="p">():</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function is to load the historical prices data, just calls the function load_historical_prices_no_threading().</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">FmpApiToDatabase</span><span class="o">.</span><span class="n">load_historical_prices_no_threading</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="FmpApiToDatabase.load_historical_prices_with_threading">
+<a class="viewcode-back" href="../../../pulse.integration.html#pulse.integration.fmpapi_to_db.FmpApiToDatabase.load_historical_prices_with_threading">[docs]</a>
+    <span class="k">def</span> <span class="nf">load_historical_prices_with_threading</span><span class="p">():</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fetching historical data is going to make lot of calls to the API. So, threading is introduced to make the processing faster.</span>
+
+<span class="sd">        Here, we are just getting historic prices of SP500 stocks using the symbols of SP500 companies.</span>
+
+<span class="sd">        It calls the function load_historical_prices_for_symbol() to get the data.</span>
+<span class="sd">        </span>
+<span class="sd">        we are not actually using it for now, but we might use it later.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">symbols</span> <span class="o">=</span> <span class="n">Queries</span><span class="p">()</span><span class="o">.</span><span class="n">get_symbols</span><span class="p">()</span>
+
+        <span class="c1"># As this is going to make lot of calls, the threading is introduced to make the processing faster</span>
+        <span class="k">with</span> <span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+            <span class="n">executor</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">FmpApiToDatabase</span><span class="o">.</span><span class="n">load_historical_prices_for_symbol</span><span class="p">,</span> <span class="n">symbols</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="FmpApiToDatabase.load_historical_prices_for_symbol">
+<a class="viewcode-back" href="../../../pulse.integration.html#pulse.integration.fmpapi_to_db.FmpApiToDatabase.load_historical_prices_for_symbol">[docs]</a>
+    <span class="k">def</span> <span class="nf">load_historical_prices_for_symbol</span><span class="p">(</span><span class="n">company_symbol</span><span class="p">):</span> 
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fetch the historical market cap data and pricing information and then load the data into database.</span>
+
+<span class="sd">        :param company_symbol: Symbols of sp500 companies passed  by the load_historical_prices_with_threading() method.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">historical_price_api</span> <span class="o">=</span> <span class="n">Historical_prices</span><span class="p">(</span><span class="n">company_symbol</span><span class="p">)</span>
+        <span class="n">historical_marketcap_api</span> <span class="o">=</span> <span class="n">Historical_market_cap</span><span class="p">(</span><span class="n">company_symbol</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Getting historical data for symbol: </span><span class="si">{</span><span class="n">company_symbol</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">historical_price_json_data</span> <span class="o">=</span> <span class="n">historical_price_api</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+        <span class="n">historical_marketcap_json_data</span> <span class="o">=</span> <span class="n">historical_marketcap_api</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+    
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">historical_price_json_data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">historical_marketcap_json_data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">symbol</span> <span class="o">=</span> <span class="n">historical_price_json_data</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span>
+            <span class="n">market_cap_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">element</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">]:</span> <span class="n">element</span><span class="p">[</span><span class="s2">&quot;marketCap&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">historical_marketcap_json_data</span><span class="p">}</span>
+            <span class="n">historical_price_with_marketcap</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="n">number</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">historical_price_json_data</span><span class="p">[</span><span class="s2">&quot;historical&quot;</span><span class="p">]:</span>
+                <span class="n">date</span> <span class="o">=</span> <span class="n">element</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">]</span>
+                <span class="n">market_cap</span> <span class="o">=</span> <span class="n">market_cap_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">date</span><span class="p">)</span>
+                <span class="n">element</span><span class="p">[</span><span class="s2">&quot;symbol&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">symbol</span>
+                <span class="n">element</span><span class="p">[</span><span class="s2">&quot;marketCap&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">market_cap</span>
+                <span class="n">historical_price_with_marketcap</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+
+                <span class="n">historical_prices_repo</span> <span class="o">=</span> <span class="n">Historical_prices_table</span><span class="p">()</span>
+                <span class="n">historical_prices_repo</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">historical_price_with_marketcap</span><span class="p">)</span>
+                <span class="n">number</span> <span class="o">=</span> <span class="n">number</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loaded data into Historical prices table for the symbol: </span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2"> on </span><span class="si">{</span><span class="n">date</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>    
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Historical market data is not available for the symbol: </span><span class="si">{</span><span class="n">company_symbol</span><span class="si">}</span><span class="s2"> &quot;</span><span class="p">)</span>    </div>
+
+
+<div class="viewcode-block" id="FmpApiToDatabase.load_historical_prices_no_threading">
+<a class="viewcode-back" href="../../../pulse.integration.html#pulse.integration.fmpapi_to_db.FmpApiToDatabase.load_historical_prices_no_threading">[docs]</a>
+    <span class="k">def</span> <span class="nf">load_historical_prices_no_threading</span><span class="p">():</span> 
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Used to load the historical prices.</span>
+<span class="sd">        </span>
+<span class="sd">        Does the same functionality as load_historical_prices_with_threading -- just that threading process is not involved in this.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">symbols</span> <span class="o">=</span> <span class="n">Queries</span><span class="p">()</span><span class="o">.</span><span class="n">get_symbols</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">company_symbol</span> <span class="ow">in</span> <span class="n">symbols</span><span class="p">:</span> 
+            
+            <span class="n">historical_price_api</span> <span class="o">=</span> <span class="n">Historical_prices</span><span class="p">(</span><span class="n">company_symbol</span><span class="p">)</span>
+            <span class="n">historical_marketcap_api</span> <span class="o">=</span> <span class="n">Historical_market_cap</span><span class="p">(</span><span class="n">company_symbol</span><span class="p">)</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Getting historical data for symbol: </span><span class="si">{</span><span class="n">company_symbol</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">historical_price_json_data</span> <span class="o">=</span> <span class="n">historical_price_api</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+            <span class="n">historical_marketcap_json_data</span> <span class="o">=</span> <span class="n">historical_marketcap_api</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+    
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">historical_price_json_data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">historical_marketcap_json_data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">symbol</span> <span class="o">=</span> <span class="n">historical_price_json_data</span><span class="p">[</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span>
+                <span class="n">market_cap_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">element</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">]:</span> <span class="n">element</span><span class="p">[</span><span class="s2">&quot;marketCap&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">historical_marketcap_json_data</span><span class="p">}</span>
+                <span class="n">historical_price_with_marketcap</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">historical_price_json_data</span><span class="p">[</span><span class="s2">&quot;historical&quot;</span><span class="p">]:</span>
+                    <span class="n">date</span> <span class="o">=</span> <span class="n">element</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">]</span>
+                    <span class="n">market_cap</span> <span class="o">=</span> <span class="n">market_cap_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">date</span><span class="p">)</span>
+                    <span class="n">element</span><span class="p">[</span><span class="s2">&quot;symbol&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">symbol</span>
+                    <span class="n">element</span><span class="p">[</span><span class="s2">&quot;marketCap&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">market_cap</span>
+                    <span class="n">historical_price_with_marketcap</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+
+                <span class="n">historical_prices_repo</span> <span class="o">=</span> <span class="n">Historical_prices_table</span><span class="p">()</span>
+                <span class="n">historical_prices_repo</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">historical_price_with_marketcap</span><span class="p">)</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loaded data into Historical prices table for symbol: </span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>    
+            <span class="k">else</span><span class="p">:</span>
+               <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Historical market data is not available for the symbol: </span><span class="si">{</span><span class="n">company_symbol</span><span class="si">}</span><span class="s2"> &quot;</span><span class="p">)</span>    </div>
+
+
+        
+
+
+<div class="viewcode-block" id="FmpApiToDatabase.load_daily_prices">
+<a class="viewcode-back" href="../../../pulse.integration.html#pulse.integration.fmpapi_to_db.FmpApiToDatabase.load_daily_prices">[docs]</a>
+    <span class="k">def</span> <span class="nf">load_daily_prices</span><span class="p">():</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function is to load the daily prices of SP500 stocks data into the data base (Daily_prices_table).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="c1"># We are here getting daily prices of SP500 stocks. So fetching the symbols </span>
+        <span class="c1"># of SP500</span>
+        <span class="n">symbols</span> <span class="o">=</span> <span class="n">Queries</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="n">symbols</span><span class="o">.</span><span class="n">get_symbols</span><span class="p">():</span>
+            <span class="n">daily_prices_api</span> <span class="o">=</span> <span class="n">Daily_prices</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+            <span class="n">daily_prices_json_data</span> <span class="o">=</span> <span class="n">daily_prices_api</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fetched stock prices json data from API for symbol: </span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="n">daily_prices_repo</span> <span class="o">=</span> <span class="n">Daily_prices_table</span><span class="p">()</span>
+            <span class="n">daily_prices_repo</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">daily_prices_json_data</span><span class="p">)</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;loaded stock prices API data into stock price table for symbol: </span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Kenrasoft.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
