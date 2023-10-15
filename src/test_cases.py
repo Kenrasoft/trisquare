@@ -9,7 +9,7 @@ class TestFunctions(unittest.TestCase):
         object1.load_config()
         object2 = config_singleton()
         object2.load_config()
-        return self.assertEqual(test_functions.test_config_singleton(object1,object2),True)
+        return self.assertEqual(test_functions.singleton(object1,object2),True)
 
 
 if __name__ == '__main__':
