@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, DateTime, Float, Integer, BigInteger
+from sqlalchemy import Column, String, DateTime, Float, Integer, BigInteger, Date
 from sqlalchemy.ext.declarative import declarative_base
 from pulse.repository.pulsedb_base import PulseDB_Base
 from datetime import datetime
@@ -137,3 +137,28 @@ class Historical_prices_table(Base, PulseDB_Base):
             )
         return row
 
+
+
+class market_cap_data_table(Base, PulseDB_Base):
+# Entity class for the DB table market_cap_data. 
+
+# Manage all the operations like loading the data to the market_cap_data table.
+
+    __tablename__ = 'market_cap_data'
+    date_on = Column(Date, primary_key=True)
+    sector = Column(String, primary_key=True)
+    subsector = Column(String, primary_key=True)
+    market_cap = Column(Float)
+
+
+    def getBase(self):
+        return Base
+
+    def convert(self, element):
+        row = market_cap_data_table(
+            date_on=element["date_on"],
+            sector=element["sector"],
+            subsector=element["subsector"],
+            market_cap=element["market_cap"]
+        )
+        return row

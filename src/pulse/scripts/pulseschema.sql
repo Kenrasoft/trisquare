@@ -7,6 +7,7 @@ DROP TABLE if EXISTS public.daily_prices;
 DROP TABLE if EXISTS public.historical_prices;
 DROP TABLE if EXISTS public.sp500;
 DROP TABLE if EXISTS public.globalstocks;
+DROP TABLE if EXISTS public.market_cap_data;
 DROP TABLE if EXISTS public.globaletfs;
 DROP TABLE if EXISTS public.stockprices; -- this table is removed, this needs to be removed eventually, kept it for backward compatability
 DROP TABLE if EXISTS public.historic_prices; -- this table is removed, this needs to be removed eventually, kept it for backward compatability
@@ -111,6 +112,15 @@ CREATE TABLE public.historical_prices (
 	change_over_time float8 NULL,
 	market_cap float8 NULL,
 	CONSTRAINT historical_prices_pkey PRIMARY KEY (symbol, date_time)
+);
+
+
+CREATE TABLE public.market_cap_data (
+	date_on DATE NOT NULL,
+	sector varchar NOT NULL,
+	subsector varchar NOT NULL,
+	market_cap float8 NULL,
+	CONSTRAINT market_cap_data_pkey PRIMARY KEY (date_on, sector, subsector)
 );
 
 

@@ -15,6 +15,7 @@ from pulse.repository.index_companies_repo import DOWJONES_table
 from pulse.repository.stock_prices_repo import Global_stocks_table
 from pulse.repository.stock_prices_repo import Historical_prices_table
 from pulse.repository.stock_prices_repo import Daily_prices_table
+from pulse.repository.stock_prices_repo import market_cap_data_table
 from pulse.repository.queries import Queries
 from concurrent.futures import ThreadPoolExecutor
 
@@ -170,3 +171,30 @@ class FmpApiToDatabase():
             daily_prices_repo.load_data(daily_prices_json_data)
 
             print(f"loaded stock prices API data into stock price table for symbol: {symbol}")
+
+
+    def load_market_cap_data():
+        # This method is to load the aggregate of market cap data of sp500 companies for each subsector on every day basis.
+
+        market_cap_repo = market_cap_data_table()
+
+        print(f"Market cap historical data Loading started .....")
+
+        market_cap_historical_data = Queries().get_market_cap_data(Historical_prices_table)
+        market_cap_repo.load_data(market_cap_historical_data)
+
+        print(f"..... Market cap historical data Loading Completed")
+
+        print(f"Market cap daily data Loading started .....")
+
+        market_cap_daily_data = Queries().get_market_cap_data(Daily_prices_table)
+        market_cap_repo.load_data(market_cap_daily_data)
+
+        print(f"..... Market cap daily data Loading Completed")
+
+
+        
+
+
+
+
