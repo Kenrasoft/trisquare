@@ -301,3 +301,34 @@ class Queries:
                 ]
 
             return periodic_marketcap_for_sectors
+        
+
+    def get_market_cap_data(self, table_name):
+        db_connector = DatabaseConnect()
+        session = db_connector.connect_db()
+
+        with session() as session:
+            # Query the database for sectors
+            results = session.query(
+                func.date(table_name.date_time).label('date_on'),
+                SP500_table.sector,
+                SP500_table.subsector,
+                func.sum(table_name.market_cap).label('market_cap')
+                ).join(
+                table_name,
+                SP500_table.symbol == table_name.symbol
+                ).group_by(
+                SP500_table.subsector, SP500_table.sector, func.date(table_name.date_time)
+                ).order_by(
+                SP500_table.subsector, SP500_table.sector, func.date(table_name.date_time)
+                ).all()
+            
+        # Convert the results into a list of dictionaries
+        data = [
+            {"date_on": date_on, "sector": sector, "subsector": subsector, "market_cap": market_cap }
+            for date_on, sector, subsector, market_cap in results
+        ]
+        
+        return data
+    
+    
