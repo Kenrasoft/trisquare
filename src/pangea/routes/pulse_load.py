@@ -8,9 +8,7 @@ query_string_to_function_mapping = {
     "globalStocks": FmpApiToDatabase.load_global_stocks,
     "historicalPrices": FmpApiToDatabase.load_historical_prices,
     "dailyPrices": FmpApiToDatabase.load_daily_prices,
-    "compEstimates": FmpApiToDatabase.load_comp_estimates,
-    "compRatings": FmpApiToDatabase.load_comp_ratings,
-    "compRecom": FmpApiToDatabase.load_comp_recom,
+    "compAnalysis":FmpApiToDatabase.load_company_analysis
 }
 
 @pulse_load.route('/pulse/load', methods=['GET'])

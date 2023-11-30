@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Sectors from './pages/Sectors';
 import SectorsMarketCap from './pages/SectorsMarketCap';
@@ -31,7 +31,7 @@ async function fetchPangeaData() {
   try {
     if (!pangea_loaded && apiRepo.type === "edge") {
 
-      const response = await axios.get('/pangea_edge.json');
+      const response = await axios.get('pangea_edge.json');
       console.log("Fetching data..DONE");
       resetPangeaEdge(response.data);
     }
