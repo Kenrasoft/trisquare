@@ -225,4 +225,9 @@ class FmpApiToDatabase():
 
             print(f"loaded company recommendation API data into comp_recom table for symbol: {symbol}")
         
+    def load_company_analysis():
+        #This method is used to load all the index stocks.
+        FmpApiToDatabase.load_comp_recom()
+        FmpApiToDatabase.load_comp_ratings()
+        FmpApiToDatabase.load_comp_estimates()
 
